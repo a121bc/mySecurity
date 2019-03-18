@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ltj.security.module.User.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.ltj.security.module.User.po.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="enabled" property="enabled" jdbcType="INTEGER" />
+        <result column="locked" property="locked" jdbcType="INTEGER" />
+        <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="loadUserByUsername" resultType="com.ltj.security.module.User.po.User">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+    <select id="getUserRolesByUid" resultType="com.ltj.security.module.Role.po.Role">
+        SELECT * FROM role r,user_role ur where r.id = ur.rid AND ur.uid = #{id}
+    </select>
+</mapper>

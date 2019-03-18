@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ltj.security.module.UserRole.mapper.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.ltj.security.module.UserRole.po.UserRole" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="uid" property="uid" jdbcType="INTEGER" />
+        <result column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
+    </resultMap>
+</mapper>
