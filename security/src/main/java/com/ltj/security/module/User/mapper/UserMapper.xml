@@ -3,14 +3,23 @@
 <mapper namespace="com.ltj.security.module.User.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.ltj.security.module.User.po.User" >
         <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="enabled" property="enabled" jdbcType="INTEGER" />
         <result column="locked" property="locked" jdbcType="INTEGER" />
+        <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <select id="loadUserByUsername" resultType="com.ltj.security.module.User.po.User">
+    <resultMap id="lazyLoadRoles" type="com.ltj.security.module.User.po.User" extends="BaseResultMap">
+        <collection property="roles" ofType="com.ltj.security.module.Role" select="com.ltj.security.module.User.mapper.UserMapper.getUserRolesByUid"
+                    column="id"></collection>
+    </resultMap>
+
+    <select id="loadUserByUsername" resultMap="lazyLoadRoles">
         SELECT * FROM user WHERE username = #{username}
     </select>
     <select id="getUserRolesByUid" resultType="com.ltj.security.module.Role.po.Role">

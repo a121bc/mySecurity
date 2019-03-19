@@ -4,6 +4,8 @@ import com.ltj.security.module.Menu.mapper.MenuMapper;
 import com.ltj.security.module.Menu.po.Menu;
 import com.ltj.security.module.Menu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames = "menus_cache")
 public class MenuServiceImpl implements MenuService {
 
 	@Autowired
@@ -55,6 +58,19 @@ public class MenuServiceImpl implements MenuService {
         }
         map.put("list",list);
         return map;
+    }
+
+    /**
+     * @Description 查询所有菜单
+     * @param
+     * @return java.util.List<com.ltj.security.module.Menu.po.Menu>
+     * @author 刘天珺
+     * @Date 16:40 2019-3-18 0018
+     **/
+    @Cacheable(key = "#root.methodName")
+    @Override
+    public List<Menu> getAllMenu() {
+        return menuMapper.getAllMenu();
     }
 
 }

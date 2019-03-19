@@ -154,6 +154,7 @@ public class User implements UserDetails {
         this.locked = locked;
     }
 
+
     public Date getModifydate() {
         return modifydate;
     }

@@ -12,5 +12,28 @@
         <result column="requireauth" property="requireauth" jdbcType="INTEGER" />
         <result column="parentid" property="parentid" jdbcType="INTEGER" />
         <result column="enabled" property="enabled" jdbcType="INTEGER" />
+        <!--角色集合-->
+        <collection property="roles" ofType="com.ltj.security.module.Role.po.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnamezh" property="namezh"/>
+        </collection>
     </resultMap>
+
+    <select id="getAllMenu" resultMap="BaseResultMap">
+        SELECT
+            m.*,
+            r.`id` AS rid,
+            r.`name` AS rname,
+            r.`nameZh` AS rnamezh
+        FROM
+            menu m
+            LEFT JOIN menu_role mr ON m.`id` = mr.`mid`
+            LEFT JOIN role r ON mr.`rid` = r.`id`
+        WHERE
+            m.`enabled` = TRUE
+        ORDER BY
+            m.`id` DESC
+    </select>
+
 </mapper>

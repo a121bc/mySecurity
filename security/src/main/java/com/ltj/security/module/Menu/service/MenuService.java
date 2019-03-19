@@ -2,6 +2,7 @@ package com.ltj.security.module.Menu.service;
 
 import com.ltj.security.module.Menu.po.Menu;
 
+import java.util.List;
 import java.util.Map;
 
 public interface MenuService {
@@ -15,5 +16,6 @@ public interface MenuService {
 	//查询所有记录
 	Map<String,Object> selectAll();
 
-
+	//查询所有菜单
+	List<Menu> getAllMenu();
 }
