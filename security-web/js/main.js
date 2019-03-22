@@ -53,20 +53,6 @@ angular.module('app')
         // save to local storage
         $localStorage.settings = $scope.app.settings;
       }, true);
-/*
-
-      // angular translate
-      $scope.lang = { isopen: false };
-      $scope.langs = {en:'English', de_DE:'German', it_IT:'Italian'};
-      $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "English";
-      $scope.setLang = function(langKey, $event) {
-        // set the current lang
-        $scope.selectLang = $scope.langs[langKey];
-        // You can change the language during runtime
-        $translate.use(langKey);
-        $scope.lang.isopen = !$scope.lang.isopen;
-      };
-*/
 
       function isSmartDevice( $window )
       {
@@ -75,25 +61,6 @@ angular.module('app')
           // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
           return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
-
-
-
-
-      //登录
-      /*$http({
-        method: 'post',
-        url:appurl+'/login',
-        params:{
-          username:'liu',
-          password:123
-        }
-      }).then(function(response) {
-        /!*if(response.data.flag){
-          console.log(response.data);
-        }*!/
-        console.log(response);
-        //载入左侧目录菜单
-      });*/
 
       $http({
           method: 'post',

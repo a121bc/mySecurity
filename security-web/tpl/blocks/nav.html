@@ -1,4 +1,9 @@
 <script id="reList" type="text/ng-template">
+    <li class="nav-sub-header">
+        <a href>
+            <span >{{item.name}}</span>
+        </a>
+    </li>
     <li ui-sref-active="active" ng-repeat="ite in item.children">
       <a href class="auto">
         <span class="pull-right text-muted" ng-if="ite.children.length">
