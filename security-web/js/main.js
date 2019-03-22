@@ -4,8 +4,8 @@ let appurl ="http://"+document.domain+":8011";
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window','$http',
-    function(              $scope,   $translate,   $localStorage,   $window ,$http) {
+  .controller('AppCtrl', ['$scope',  '$localStorage', '$window','$http',
+    function(              $scope,    $localStorage,   $window ,$http) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
@@ -53,6 +53,7 @@ angular.module('app')
         // save to local storage
         $localStorage.settings = $scope.app.settings;
       }, true);
+/*
 
       // angular translate
       $scope.lang = { isopen: false };
@@ -65,6 +66,7 @@ angular.module('app')
         $translate.use(langKey);
         $scope.lang.isopen = !$scope.lang.isopen;
       };
+*/
 
       function isSmartDevice( $window )
       {
