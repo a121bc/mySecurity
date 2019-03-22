@@ -78,7 +78,7 @@ angular.module('app')
 
 
       //登录
-      $http({
+      /*$http({
         method: 'post',
         url:appurl+'/login',
         params:{
@@ -86,23 +86,26 @@ angular.module('app')
           password:123
         }
       }).then(function(response) {
-        /*if(response.data.flag){
+        /!*if(response.data.flag){
           console.log(response.data);
-        }*/
+        }*!/
         console.log(response);
         //载入左侧目录菜单
-        $http({
-          method: 'post',
-          url:appurl+'/WorkFlow/Menu/selectAll'
-        }).then(function(response) {
-          /*if(response.data.flag){
-            console.log(response.data);
-          }*/
-          console.log(response.data);
+      });*/
 
-        });
+      $http({
+          method: 'post',
+          url:appurl+'/Menu/selectAll',
+          params:{
+            access_token:'d4b7e602-6c9f-4868-8f3e-226b98b8aa91'
+          }
+      }).then(function(response) {
+          console.log(response.data);
+        var data = response.data;
+        $scope.menu_list = data.list;
 
       });
+
 
 
   }]);

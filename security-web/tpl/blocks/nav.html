@@ -1,10 +1,33 @@
+<script id="reList" type="text/ng-template">
+    <li ui-sref-active="active" ng-repeat="ite in item.children">
+      <a href class="auto">
+        <span class="pull-right text-muted" ng-if="ite.children.length">
+          <i class="fa fa-fw fa-angle-right text"></i>
+          <i class="fa fa-fw fa-angle-down text-active"></i>
+        </span>
+        <span>{{ite.name}}</span>
+      </a>
+      <ul class="nav nav-sub dk" ng-if="ite.children.length" ng-include="'reList'" ng-init="item=ite"></ul>
+    </li>
+</script>
+
+
 <!-- list -->
 <ul class="nav">
-  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-    <span >Navigation</span>
+  <li ng-repeat="myitem in menu_list">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+      <span class="font-bold" >{{myitem.name}}</span>
+    </a>
+    <ul class="nav nav-sub dk" ng-include="'reList'" ng-init="item=myitem"></ul>
   </li>
+
   <li>
-    <a href class="auto">      
+    <a href class="auto">
       <span class="pull-right text-muted">
         <i class="fa fa-fw fa-angle-right text"></i>
         <i class="fa fa-fw fa-angle-down text-active"></i>
@@ -32,12 +55,6 @@
     </ul>
   </li>
   <li ui-sref-active="active">
-    <a ui-sref="app.calendar">
-      <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
-      <span class="font-bold" >Calendar</span>
-    </a>
-  </li>
-  <!--<li ui-sref-active="active">
     <a ui-sref="app.mail.list">
       <b class="badge bg-info pull-right">9</b>
       <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
@@ -381,6 +398,6 @@
       <i class="icon-question icon"></i>
       <span >Documents</span>
     </a>
-  </li>-->
+  </li>
 </ul>
 <!-- / list -->

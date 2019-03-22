@@ -17,10 +17,10 @@ angular.module('app')
       function ($stateProvider,   $urlRouterProvider) {
           
           $urlRouterProvider
-              .otherwise('/app/dashboard-v1');
+              .otherwise('/app');
           $stateProvider
               .state('app', {
-                  abstract: true,
+                  abstract: false,
                   url: '/app',
                   templateUrl: 'tpl/app.html'
               })

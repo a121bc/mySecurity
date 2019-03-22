@@ -1171,7 +1171,7 @@ html {
           transition: all 0.2s ease-in-out 0s;
 }
 
-.active .nav-sub,
+.active>.nav-sub,
 .app-aside-folded li:hover .nav-sub,
 .app-aside-folded li:focus .nav-sub,
 .app-aside-folded li:active .nav-sub {

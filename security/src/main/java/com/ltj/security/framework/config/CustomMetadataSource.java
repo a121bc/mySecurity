@@ -1,6 +1,5 @@
 package com.ltj.security.framework.config;
 
-import com.ltj.security.module.Menu.mapper.MenuMapper;
 import com.ltj.security.module.Menu.po.Menu;
 import com.ltj.security.module.Menu.service.MenuService;
 import com.ltj.security.module.Role.po.Role;

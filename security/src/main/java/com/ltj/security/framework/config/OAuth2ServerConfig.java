@@ -1,12 +1,17 @@
 package com.ltj.security.framework.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ltj.security.framework.Util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -18,6 +23,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 描 述
  * 创 建 人 刘天珺
@@ -27,9 +39,18 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 public class OAuth2ServerConfig {
     private static final String DEMO_RESOURCE_ID = "order";
 
+    private static ObjectMapper om = new ObjectMapper();
+    static {
+        om.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    }
+
+
     @Configuration
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
+        @Autowired
+        private AuthenticationAccessDeniedHandler deniedHandler;
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
@@ -38,7 +59,6 @@ public class OAuth2ServerConfig {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            // @formatter:off
             http
                     // Since we want the protected resources to be accessible in the UI as well we need
                     // session creation to be allowed (it's disabled by default in 2.0.6)
@@ -49,9 +69,9 @@ public class OAuth2ServerConfig {
                     .anonymous()
                     .and()
                     .authorizeRequests()
-//                    .antMatchers("/product/**").access("#oauth2.hasScope('select') and hasRole('ROLE_USER')")
-                    .antMatchers("/order/**").authenticated();//配置order访问控制，必须认证过后才可以访问
-            // @formatter:on
+                    .antMatchers("/**").authenticated()//配置访问控制，必须认证过后才可以访问
+                    .and()
+                    .exceptionHandling().accessDeniedHandler(deniedHandler);
         }
     }
 
@@ -60,8 +80,8 @@ public class OAuth2ServerConfig {
     @EnableAuthorizationServer
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-//        @Autowired
-//        AuthenticationManager authenticationManager;
+        @Autowired
+        AuthenticationManager authenticationManager;
         @Autowired
         RedisConnectionFactory redisConnectionFactory;
 
@@ -86,7 +106,7 @@ public class OAuth2ServerConfig {
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             endpoints
                     .tokenStore(new RedisTokenStore(redisConnectionFactory))
-//                    .authenticationManager(authenticationManager)
+                    .authenticationManager(authenticationManager)
                     .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
         }
 
