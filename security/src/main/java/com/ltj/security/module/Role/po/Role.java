@@ -4,10 +4,11 @@ import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Role{
+public class Role implements Serializable {
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;

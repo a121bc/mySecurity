@@ -51,7 +51,7 @@ public class MenuServiceImpl implements MenuService {
         Map<String, Object> map = new HashMap<>();
         map.put("flag",false);
         map.put("message","未查询到数据！");
-        List<Menu> list = menuMapper.selectAll();
+        List<Menu> list = menuMapper.selectShowMenu(1);
         if(list.size()>0){
             map.put("flag",true);
             map.put("message","查询成功！");

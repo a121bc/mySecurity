@@ -12,6 +12,10 @@
         <result column="requireauth" property="requireauth" jdbcType="INTEGER" />
         <result column="parentid" property="parentid" jdbcType="INTEGER" />
         <result column="enabled" property="enabled" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!--后台管理视图-->
+    <resultMap id="MenuManageMap" type="com.ltj.security.module.Menu.po.Menu" extends="BaseResultMap">
         <!--角色集合-->
         <collection property="roles" ofType="com.ltj.security.module.Role.po.Role">
             <id column="rid" property="id"/>
@@ -20,7 +24,14 @@
         </collection>
     </resultMap>
 
-    <select id="getAllMenu" resultMap="BaseResultMap">
+    <!--后台列表视图-->
+    <resultMap id="MenuShowMap" type="com.ltj.security.module.Menu.po.Menu" extends="BaseResultMap">
+        <!--子菜单-->
+        <collection property="children" ofType="com.ltj.security.module.Menu.po.Menu" select="com.ltj.security.module.Menu.mapper.MenuMapper.selectShowMenu"
+                    column="id"></collection>
+    </resultMap>
+
+    <select id="getAllMenu" resultMap="MenuManageMap">
         SELECT
             m.*,
             r.`id` AS rid,
@@ -35,5 +46,18 @@
         ORDER BY
             m.`id` DESC
     </select>
+
+    <!--查询后台列表-->
+    <select id="selectShowMenu" resultMap="MenuShowMap">
+        SELECT
+            m.*
+        FROM
+            menu m
+        WHERE
+            m.parentid = #{id}
+            AND m.`enabled` = TRUE
+    </select>
+
+
 
 </mapper>
