@@ -66,7 +66,7 @@ angular.module('app')
           method: 'post',
           url:appurl+'/Menu/selectAll',
           params:{
-            access_token:'d4b7e602-6c9f-4868-8f3e-226b98b8aa91'
+            access_token:'c8bd0ffc-13f5-45f9-9e1a-c8ae0a576e56'
           }
       }).then(function(response) {
           console.log(response.data);
