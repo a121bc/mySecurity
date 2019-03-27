@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 @Transactional
-@CacheConfig(cacheNames = "menus_cache")
+//@CacheConfig(cacheNames = "menus_cache")
 public class MenuServiceImpl implements MenuService {
 
 	@Autowired
@@ -67,7 +67,7 @@ public class MenuServiceImpl implements MenuService {
      * @author 刘天珺
      * @Date 16:40 2019-3-18 0018
      **/
-    @Cacheable(key = "#root.methodName")
+//    @Cacheable(key = "#root.methodName")
     @Override
     public List<Menu> getAllMenu() {
         return menuMapper.getAllMenu();

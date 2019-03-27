@@ -1,5 +1,6 @@
 package com.ltj.security.framework.config2;
 
+import com.ltj.security.module.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,15 +28,23 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private UserService userService;
+    @Autowired
     private ClientDetailsService clientDetailsService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
+    /*@Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)
                 .withUser("bill").password(passwordEncoder.encode("abc123")).roles("ADMIN").and()
                 .withUser("bob").password("abc123").roles("USER");
+    }*/
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override

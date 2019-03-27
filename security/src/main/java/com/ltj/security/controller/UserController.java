@@ -1,11 +1,13 @@
 package com.ltj.security.controller;
 
+import com.ltj.security.framework.Util.UserUtils;
 import com.ltj.security.module.User.po.User;
 import com.ltj.security.module.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -27,7 +29,7 @@ public class UserController {
 
 	@RequestMapping("/selectAll")
 	public Map<String,Object> selectAll(){
-        return userService.selectAll();
+		return userService.selectAll();
     }
 
 }
