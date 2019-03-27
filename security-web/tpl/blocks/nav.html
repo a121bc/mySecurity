@@ -20,12 +20,12 @@
 <!-- list -->
 <ul class="nav">
   <li ng-repeat="myitem in menu_list">
-    <a href class="auto">
-      <span class="pull-right text-muted">
+    <a href class="auto" ui-sref="{{myitem.path}}">
+      <span class="pull-right text-muted" ng-if="myitem.children.length">
         <i class="fa fa-fw fa-angle-right text"></i>
         <i class="fa fa-fw fa-angle-down text-active"></i>
       </span>
-      <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+      <i ng-class="myitem.iconcls"></i>
       <span class="font-bold" >{{myitem.name}}</span>
     </a>
     <ul class="nav nav-sub dk" ng-include="'reList'" ng-init="item=myitem"></ul>
