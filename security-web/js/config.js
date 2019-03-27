@@ -4,7 +4,7 @@ var app =
 angular.module('app')
   .config(
     [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
-    function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
+    function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide, $localStorage) {
         
         // lazy controller, directive and service
         app.controller = $controllerProvider.register;
@@ -17,13 +17,21 @@ angular.module('app')
     }
   ]);
 
-app.factory('AuthInterceptor', [function() {
+app.factory('AuthInterceptor', ['$localStorage',function($localStorage) {
     return {
         // Send the Authorization header with each request
         'request': function(config) {
-            config.headers = config.headers || {};
-            var encodedString = btoa("my-trusted-client:secret");
-            config.headers.Authorization = 'Basic '+encodedString;
+
+            let url = config.url;
+            //请求通用配置（添加token）
+            if(url.indexOf("oauth/token") != -1){
+                config.headers = config.headers || {};
+                var encodedString = btoa("my-trusted-client:secret");
+                config.headers.Authorization = 'Basic '+encodedString;
+            }else if($localStorage.token){
+                config.headers.Authorization = 'Bearer '+$localStorage.token.access_token;
+            }
+
             return config;
         }
     };

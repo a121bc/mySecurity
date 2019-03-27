@@ -4,7 +4,7 @@ let appurl ="http://"+document.domain+":8011";
 /* Controllers */
 
 angular.module('app')
-    .controller('AppCtrl', ['$scope',  '$localStorage', '$window', '$http', '$state',
+    .controller('AppCtrl', ['$scope',  '$localStorage', '$window',
         function(              $scope,    $localStorage,   $window , $http, $state) {
             // add 'ie' classes to html
             var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -61,22 +61,5 @@ angular.module('app')
                 // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
                 return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
             }
-
-            $http({
-                method: 'get',
-                url:appurl+'/Menu/selectAll',
-                params:{
-                    access_token:'aa43c3be-ef13-4109-a2ed-ae2f055cc75a'
-                }
-            }).then(function successCallback(response) {
-                var data = response.data;
-                $scope.menu_list = data.list;
-            }, function errorCallback(response) {
-                console.log(response);
-                $state.go("access.signin");
-
-            });
-
-
 
         }]);

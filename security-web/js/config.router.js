@@ -22,7 +22,13 @@ angular.module('app')
               .state('app', {
                   abstract: false,
                   url: '/app',
-                  templateUrl: 'tpl/app.html'
+                  templateUrl: 'tpl/app.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['js/controllers/menu.js']);
+                          }]
+                  }
               })
               .state('app.dashboard-v1', {
                   url: '/dashboard-v1',

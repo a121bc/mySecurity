@@ -5,10 +5,9 @@
 app.controller('SigninFormController', ['$scope', '$http', '$state', '$localStorage', function($scope, $http, $state,$localStorage) {
     $scope.user = {};
     $scope.authError = null;
+    delete $localStorage.token;
     $scope.login = function() {
         $scope.authError = null;
-
-
         // Try to login
         $http({
             method: 'post',
