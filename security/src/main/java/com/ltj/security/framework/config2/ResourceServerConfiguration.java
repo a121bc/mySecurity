@@ -27,13 +27,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		/*http.
-			anonymous().disable()
-			.authorizeRequests()
-			.antMatchers("/User/**").denyAll()
-			.antMatchers("/Menu/**").access("hasRole('ADMIN')")
-			.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());*/
-
 		http.authorizeRequests()
 				.anyRequest().authenticated()
 				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
@@ -43,8 +36,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 						o.setAccessDecisionManager(urlAccessDecisionManager);
 						return o;
 					}
-				});
-//				.and().csrf().disable();
+				})
+				.and().cors().and().csrf().disable();
 
 	}
 

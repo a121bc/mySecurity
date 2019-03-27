@@ -16,3 +16,19 @@ angular.module('app')
         app.value      = $provide.value;
     }
   ]);
+
+app.factory('AuthInterceptor', [function() {
+    return {
+        // Send the Authorization header with each request
+        'request': function(config) {
+            config.headers = config.headers || {};
+            var encodedString = btoa("my-trusted-client:secret");
+            config.headers.Authorization = 'Basic '+encodedString;
+            return config;
+        }
+    };
+}]);
+
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptor');
+}]);
