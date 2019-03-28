@@ -38,9 +38,10 @@ angular.module('app')
                           function( $ocLazyLoad ){
                               return $ocLazyLoad.load('datatables').then(
                                   function(){
-                                      return $ocLazyLoad.load(['js/controllers-cus/user.js']);
+                                      return $ocLazyLoad.load(['js/controllers-cus/user.js','datatables']);
                                   }
                               );
+                              // return $ocLazyLoad.load(['js/controllers-cus/user.js','datatables','showcase.bindAngularDirective']);
                           }]
                   }
               })

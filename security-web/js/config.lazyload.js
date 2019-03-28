@@ -149,8 +149,7 @@ angular.module('app')
                       'vendor/jquery/datatables/jquery.dataTables.min.js',
                       'vendor/jquery/datatables/dataTables.bootstrap.js',
                       'vendor/angular/angular-datatables/angular-datatables.min.js',
-                      'vendor/jquery/datatables/dataTables.bootstrap.css',
-                      // 'vendor/angular/angular-datatables/angular-datatables.min.css'
+                      'vendor/jquery/datatables/dataTables.bootstrap.css'
                   ]
               }
           ]
