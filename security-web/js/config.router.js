@@ -26,7 +26,7 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['js/controllers/menu.js']);
+                              return $ocLazyLoad.load(['js/controllers-cus/menu.js']);
                           }]
                   }
               })
@@ -36,7 +36,11 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['js/controllers-cus/user.js']);
+                              return $ocLazyLoad.load('datatables').then(
+                                  function(){
+                                      return $ocLazyLoad.load(['js/controllers-cus/user.js']);
+                                  }
+                              );
                           }]
                   }
               })
