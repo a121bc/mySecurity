@@ -7,5 +7,9 @@
             DataTables{{userCtrl.msg}}
         </div>
         <table datatable="" dt-options="userCtrl.dpOptions" dt-columns="userCtrl.dtColumns" dt-instance="userCtrl.dtInstance" class="table table-striped m-b-none"></table>
-        </div>
+    </div>
 </div>
+<!--模态框-->
+<script type="text/ng-template" id="myModalContent.html">
+    <div ng-include="'tpl-cus/user/modal.html'"></div>
+</script>

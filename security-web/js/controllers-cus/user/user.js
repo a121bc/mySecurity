@@ -2,11 +2,10 @@
 
 /* Controllers */
 
-app
 // Menu controller
-    .controller('UserController',
-    ['$q', '$scope', '$http', '$state', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile',
-    function($q,$scope,$http,$state,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile) {
+app.controller('UserController',
+    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal', '$log',
+    function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal,$log) {
         let vm = this;
 
         vm.userList = [];
@@ -28,7 +27,6 @@ app
                 if(data.error=="access_denied"){
                     console.log(data.error_description);
                 }
-                // deferred.resolve([]);
                 deferred.reject(data);
             });
             return deferred.promise;
@@ -64,8 +62,46 @@ app
         }
         //编辑
         vm.edit = function (person) {
-            console.log('You are trying to remove the row: ' + JSON.stringify(person));
-            vm.dtInstance.reloadData();
-        }
+            // $log.info('You are trying to remove the row: ' + JSON.stringify(person));
+            // vm.dtInstance.reloadData();
+            $scope.open('lg');
+        };
+
+        $scope.items = ['item1', 'item2', 'item3'];
+        $scope.open = function (size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
 
     }]);
+
+//模态框实例
+app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+}])
+;

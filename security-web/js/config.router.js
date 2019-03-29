@@ -32,13 +32,13 @@ angular.module('app')
               })
               .state('app.user', {
                   url: '/user',
-                  templateUrl: 'tpl-cus/user.html',
+                  templateUrl: 'tpl-cus/user/user.html',
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
                               return $ocLazyLoad.load('datatables').then(
                                   function(){
-                                      return $ocLazyLoad.load(['js/controllers-cus/user.js','datatables']);
+                                      return $ocLazyLoad.load(['js/controllers-cus/user/user.js','datatables']);
                                   }
                               );
                               // return $ocLazyLoad.load(['js/controllers-cus/user.js','datatables','showcase.bindAngularDirective']);
