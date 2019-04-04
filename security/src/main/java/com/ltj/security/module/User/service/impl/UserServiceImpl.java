@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("flag",false);
         map.put("message","未查询到数据！");
-        List<User> list = userMapper.selectAll();
+        List<User> list = userMapper.selectAllUser();
         if(list.size()>0){
             map.put("flag",true);
             map.put("message","查询成功！");

@@ -44,7 +44,9 @@ app.controller('UserController',
 
         vm.dtColumns = [
             DTColumnBuilder.newColumn('name').withTitle('姓名'),
-            DTColumnBuilder.newColumn('sex').withTitle('性别'),
+            DTColumnBuilder.newColumn('sex').withTitle('性别').renderWith(function(data, type, full) {
+                return data==1?"男":"女";
+            }),
             DTColumnBuilder.newColumn('phone').withTitle('手机号'),
             DTColumnBuilder.newColumn('username').withTitle('账号'),
             DTColumnBuilder.newColumn('modifydate').withTitle('操作日期'),
@@ -64,24 +66,29 @@ app.controller('UserController',
         vm.edit = function (person) {
             // $log.info('You are trying to remove the row: ' + JSON.stringify(person));
             // vm.dtInstance.reloadData();
-            $scope.open('lg');
+            $scope.open('lg', person);
         };
 
         $scope.items = ['item1', 'item2', 'item3'];
-        $scope.open = function (size) {
-            var modalInstance = $modal.open({
+        $scope.open = function (size, person) {
+            let modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
                     items: function () {
                         return $scope.items;
+                    },
+                    user:function () {
+                        return person;
                     }
+
                 }
             });
 
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
+
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
@@ -90,18 +97,28 @@ app.controller('UserController',
     }]);
 
 //模态框实例
-app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'user', function($scope, $modalInstance, items,user) {
     $scope.items = items;
+    $scope.user = user;
+
+    // $scope.sex_option = {0:'女',1:'男'};
+    // $scope.enabled_option = {0:'否',1:'是'};
+    // $scope.locked_option = {false:'否',true:'是'};
+
     $scope.selected = {
         item: $scope.items[0]
     };
 
     $scope.ok = function () {
         $modalInstance.close($scope.selected.item);
+        console.log($scope.user);
+
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+
 }])
 ;

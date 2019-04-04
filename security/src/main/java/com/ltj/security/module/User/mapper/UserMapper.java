@@ -15,4 +15,7 @@ public interface UserMapper extends MyMapper<User> {
 
     //根据用户id查询角色列表
     List<Role> getUserRolesByUid(Integer id);
+
+    //查询所有用户
+    List<User> selectAllUser();
 }

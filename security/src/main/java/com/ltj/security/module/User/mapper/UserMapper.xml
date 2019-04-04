@@ -8,8 +8,8 @@
         <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
-        <result column="enabled" property="enabled" jdbcType="INTEGER" />
-        <result column="locked" property="locked" jdbcType="INTEGER" />
+        <result column="enabled" property="enabled" jdbcType="BIT" />
+        <result column="locked" property="locked" jdbcType="BIT" />
         <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
@@ -24,5 +24,9 @@
     </select>
     <select id="getUserRolesByUid" resultType="com.ltj.security.module.Role.po.Role">
         SELECT * FROM role r,user_role ur where r.id = ur.rid AND ur.uid = #{id}
+    </select>
+
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        SELECT * FROM user
     </select>
 </mapper>

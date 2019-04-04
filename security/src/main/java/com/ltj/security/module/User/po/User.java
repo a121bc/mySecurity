@@ -36,10 +36,10 @@ public class User implements UserDetails {
     private String password;
 
     /* 是否启用 */
-    private Boolean enabled;
+    private boolean enabled;
 
     /* 是否锁定 */
-    private Boolean locked;
+    private boolean locked;
 
     /* 操作人id */
     private Integer modify_userid;
@@ -78,7 +78,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    @JsonIgnore
+//    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return enabled;
@@ -147,7 +147,7 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    public Boolean isLocked() {
+    public boolean isLocked() {
         return locked;
     }
 
