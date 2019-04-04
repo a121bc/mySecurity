@@ -69,9 +69,10 @@ app.controller('UserController',
         }
         //重载数据
         function reLoadData () {
-            console.log("重载数据");
+            let deferred = $q.defer();
             let resetPaging = true;
             vm.dtInstance.changeData(loadUsers(),resetPaging);
+            return deferred.promise;
         }
 
         DTDefaultOptions.setLanguageSource("js/controllers-cus/dataTablesLanguage.json");
@@ -115,7 +116,9 @@ app.controller('UserController',
 
         //删除
         vm.delete = function (id) {
-            deleteUserById(id).then(reLoadData ());
+            $q.when(deleteUserById(id)).then(function () {
+                reLoadData ()
+            });
         };
 
         //用户编辑模态框
