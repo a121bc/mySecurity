@@ -1,8 +1,8 @@
 package com.ltj.security.module.User.po;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ltj.security.module.Role.po.Role;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-
+@JsonIgnoreProperties(value="password", allowSetters=true)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "JDBC")
@@ -133,7 +133,6 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    @JsonIgnore
     @Override
     public String getPassword() {
         return password;

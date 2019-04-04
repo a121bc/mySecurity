@@ -29,4 +29,102 @@
     <select id="selectAllUser" resultMap="BaseResultMap">
         SELECT * FROM user
     </select>
+
+    <!--注册用户-->
+    <insert id="insertUserSelective">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test='name != null and name != "" '>
+                `name`,
+            </if>
+            <if test='sex != null and sex != "" '>
+                sex,
+            </if>
+            <if test='phone != null and phone != "" '>
+                phone,
+            </if>
+            <if test='username != null and username != "" '>
+                username,
+            </if>
+            <if test='password != null and password != "" '>
+                password,
+            </if>
+            <if test='enabled == true or enabled == false '>
+                enabled,
+            </if>
+            <if test='locked == true or locked == false '>
+                locked,
+            </if>
+            <if test='modify_userid != null and modify_userid != "" '>
+                modify_userid,
+            </if>
+            <if test='modifydate != null'>
+                modifydate
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test='name != null and name != "" '>
+                #{name},
+            </if>
+            <if test='sex != null and sex != "" '>
+                #{sex},
+            </if>
+            <if test='phone != null and phone != "" '>
+                #{phone},
+            </if>
+            <if test='username != null and username != "" '>
+                #{username},
+            </if>
+            <if test='password != null and password != "" '>
+                #{password},
+            </if>
+            <if test='enabled == true or enabled == false '>
+                #{enabled},
+            </if>
+            <if test='locked == true or locked == false '>
+                #{locked},
+            </if>
+            <if test='modify_userid != null and modify_userid != "" '>
+                #{modify_userid},
+            </if>
+            <if test='modifydate != null and modifydate != "" '>
+                #{modifydate},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateUserSelective">
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test='name != null and name != "" '>
+                `name`=#{name},
+            </if>
+            <if test='sex != null and sex != "" '>
+                sex=#{sex},
+            </if>
+            <if test='phone != null and phone != "" '>
+                phone=#{phone},
+            </if>
+            <if test='username != null and username != "" '>
+                username=#{username},
+            </if>
+            <if test='password != null and password != "" '>
+                password=#{password},
+            </if>
+            <if test='enabled == true or enabled == false '>
+                enabled=#{enabled},
+            </if>
+            <if test='locked == true or locked == false '>
+                locked=#{locked},
+            </if>
+            <if test='modify_userid != null and modify_userid != "" '>
+                modify_userid=#{modify_userid},
+            </if>
+            <if test='modifydate != null '>
+                modifydate=#{modifydate},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
 </mapper>

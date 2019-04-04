@@ -16,7 +16,7 @@ app.controller('UserController',
         function loadUsers() {
             let deferred = $q.defer();
             $http({
-                method: 'get',
+                method: 'GET',
                 url:appurl+'/User/selectAll'
             }).then(function successCallback(response) {
                 let data = response.data;
@@ -30,6 +30,48 @@ app.controller('UserController',
                 deferred.reject(data);
             });
             return deferred.promise;
+        }
+
+        //注册或修改用户
+        function signOrUpdateUser(user) {
+            let deferred = $q.defer();
+            $http({
+                method: 'POST',
+                url:appurl+'/User/insertOrUpdate',
+                data:user
+            }).then(function successCallback(response) {
+                let data = response.data;
+                deferred.resolve(data);
+            }, function errorCallback(response) {
+                let data = response.data;
+                console.log(data);
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        }
+
+        //删除用户
+        function deleteUserById(id) {
+            let deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url:appurl+'/User/deleteById',
+                params:{id:id}
+            }).then(function successCallback(response) {
+                let data = response.data;
+                deferred.resolve(data);
+            }, function errorCallback(response) {
+                let data = response.data;
+                console.log(data);
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        }
+        //重载数据
+        function reLoadData () {
+            console.log("重载数据");
+            let resetPaging = true;
+            vm.dtInstance.changeData(loadUsers(),resetPaging);
         }
 
         DTDefaultOptions.setLanguageSource("js/controllers-cus/dataTablesLanguage.json");
@@ -58,27 +100,31 @@ app.controller('UserController',
             return '<button class="btn btn-warning" ng-click="userCtrl.edit(userCtrl.persons[' + data.id + '])">' +
                 '   <i class="fa fa-edit"></i>' +
                 '</button>&nbsp;' +
-                '<button class="btn btn-danger" ng-click="userCtrl.delete(userCtrl.persons[' + data.id + '])" )">' +
+                '<button class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')">' +
                 '   <i class="fa fa-trash-o"></i>' +
                 '</button>';
         }
         //编辑
         vm.edit = function (person) {
-            // $log.info('You are trying to remove the row: ' + JSON.stringify(person));
             // vm.dtInstance.reloadData();
-            $scope.open('lg', person);
+            if(!person){
+                person = {};
+            }
+            $scope.openUserModal('lg', person);
         };
 
-        $scope.items = ['item1', 'item2', 'item3'];
-        $scope.open = function (size, person) {
+        //删除
+        vm.delete = function (id) {
+            deleteUserById(id).then(reLoadData ());
+        };
+
+        //用户编辑模态框
+        $scope.openUserModal = function (size, person) {
             let modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    items: function () {
-                        return $scope.items;
-                    },
                     user:function () {
                         return person;
                     }
@@ -87,32 +133,24 @@ app.controller('UserController',
             });
 
             modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+                console.log(selectedItem);
+                //注册或修改用户
+                signOrUpdateUser(selectedItem).then(reLoadData());
 
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                $log.info('模态框关闭于: ' + new Date());
+                // vm.dtInstance.reloadData();
             });
         };
 
     }]);
 
-//模态框实例
-app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'user', function($scope, $modalInstance, items,user) {
-    $scope.items = items;
+//用户编辑模态框实例
+app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'user', function($scope, $modalInstance,user) {
     $scope.user = user;
 
-    // $scope.sex_option = {0:'女',1:'男'};
-    // $scope.enabled_option = {0:'否',1:'是'};
-    // $scope.locked_option = {false:'否',true:'是'};
-
-    $scope.selected = {
-        item: $scope.items[0]
-    };
-
     $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
-        console.log($scope.user);
-
+        $modalInstance.close($scope.user);
     };
 
     $scope.cancel = function () {

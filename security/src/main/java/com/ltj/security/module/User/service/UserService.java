@@ -11,7 +11,7 @@ public interface UserService extends UserDetailsService {
 	Map<String,Object> insertOrUpdate(User user);
 
 	//根据主键删除
-	Map<String,Object> deleteByFid(Integer fid);
+	Map<String,Object> deleteById(Integer id);
 
 	//查询所有记录
 	Map<String,Object> selectAll();

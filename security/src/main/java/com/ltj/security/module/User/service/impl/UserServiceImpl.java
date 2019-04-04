@@ -37,11 +37,11 @@ public class UserServiceImpl implements UserService {
             encryptPassword(user);
         }
         if(user.getId()!=null){
-            flag = userMapper.updateByPrimaryKeySelective(user)==1;
+            flag = userMapper.updateUserSelective(user)>=1;
             map.put("flag",flag);
             map.put("message",flag?"修改成功！":"修改失败！");
         }else {
-            flag = userMapper.insertSelective(user)==1;
+            flag = userMapper.insertUserSelective(user)>=1;
             map.put("flag",flag);
             map.put("message",flag?"添加成功！":"添加失败！");
         }
@@ -50,15 +50,15 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @Description 删除用户
-     * @param fid
+     * @param id
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @author 刘天珺
      * @Date 14:57 2019-3-15 0015
      **/
 	@Override
-    public Map<String,Object> deleteByFid(Integer fid) {
+    public Map<String,Object> deleteById(Integer id) {
         Map<String, Object> map = new HashMap<>();
-        Boolean flag = userMapper.deleteByPrimaryKey(fid)==1;
+        Boolean flag = userMapper.deleteByPrimaryKey(id)==1;
         map.put("flag",flag);
         map.put("message",flag?"删除成功！":"删除失败！");
         return map;

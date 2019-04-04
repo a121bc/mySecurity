@@ -18,4 +18,10 @@ public interface UserMapper extends MyMapper<User> {
 
     //查询所有用户
     List<User> selectAllUser();
+
+    //修改用户
+    int updateUserSelective(User user);
+
+    //新增用户
+    int insertUserSelective(User user);
 }

@@ -30,6 +30,7 @@ app.factory('AuthInterceptor', ['$localStorage',function($localStorage) {
                 config.headers.Authorization = 'Basic '+encodedString;
             }else if($localStorage.token){
                 config.headers.Authorization = 'Bearer '+$localStorage.token.access_token;
+                config.headers['Content-Type'] = "application/json;charset=UTF-8";
             }
 
             return config;
