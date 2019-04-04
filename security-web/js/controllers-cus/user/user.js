@@ -138,8 +138,9 @@ app.controller('UserController',
             modalInstance.result.then(function (selectedItem) {
                 console.log(selectedItem);
                 //注册或修改用户
-                signOrUpdateUser(selectedItem).then(reLoadData());
-
+                $q.when(signOrUpdateUser(selectedItem)).then(function () {
+                    reLoadData();
+                });
             }, function () {
                 $log.info('模态框关闭于: ' + new Date());
                 // vm.dtInstance.reloadData();
