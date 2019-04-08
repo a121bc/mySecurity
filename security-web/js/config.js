@@ -17,14 +17,14 @@ angular.module('app')
     }
   ]);
 
-app.factory('AuthInterceptor', ['$localStorage',function($localStorage) {
+app.factory('AuthInterceptor', ['$q','$localStorage', '$injector',function($q,$localStorage,$injector) {
     return {
         // Send the Authorization header with each request
         'request': function(config) {
 
             let url = config.url;
             //请求通用配置（添加token）
-            if(url.indexOf("oauth/token") != -1){
+            if(url.indexOf("oauth/token") !== -1){
                 config.headers = config.headers || {};
                 var encodedString = btoa("my-trusted-client:secret");
                 config.headers.Authorization = 'Basic '+encodedString;
@@ -34,6 +34,22 @@ app.factory('AuthInterceptor', ['$localStorage',function($localStorage) {
             }
 
             return config;
+        }/*,
+        response: function (response) {
+            let stateService = $injector.get('$state');
+            if (response.status === 401) {
+                debugger
+                stateService.go("access.signin");
+            }
+
+            return response || $q.when(response);
+        }*/,
+        responseError: function(rejection) {
+            if (rejection.status === 401) {
+                let stateService = $injector.get('$state');
+                stateService.go("access.signin");
+            }
+            return $q.reject(rejection);
         }
     };
 }]);

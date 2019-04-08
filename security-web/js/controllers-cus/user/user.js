@@ -2,15 +2,16 @@
 
 /* Controllers */
 
-// Menu controller
+// 用户 controller
 app.controller('UserController',
-    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal', '$log',
-    function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal,$log) {
+    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal', '$log','toaster',
+    function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal,$log,toaster) {
         let vm = this;
 
         vm.userList = [];
         vm.persons = {};
         vm.dtInstance = {};
+        vm.msg ="用户管理"
 
         //加载用户列表
         function loadUsers() {
@@ -22,12 +23,6 @@ app.controller('UserController',
                 let data = response.data;
                 vm.userList = data.list;
                 deferred.resolve(data.list);
-            }, function errorCallback(response) {
-                let data = response.data;
-                if(data.error=="access_denied"){
-                    console.log(data.error_description);
-                }
-                deferred.reject(data);
             });
             return deferred.promise;
         }
@@ -41,11 +36,8 @@ app.controller('UserController',
                 data:user
             }).then(function successCallback(response) {
                 let data = response.data;
+                toaster.pop(data.flag?'success':'error', '', data.message);
                 deferred.resolve(data);
-            }, function errorCallback(response) {
-                let data = response.data;
-                console.log(data);
-                deferred.reject(data);
             });
             return deferred.promise;
         }
@@ -59,11 +51,8 @@ app.controller('UserController',
                 params:{id:id}
             }).then(function successCallback(response) {
                 let data = response.data;
+                toaster.pop(data.flag?'success':'error', '', data.message);
                 deferred.resolve(data);
-            }, function errorCallback(response) {
-                let data = response.data;
-                console.log(data);
-                deferred.reject(data);
             });
             return deferred.promise;
         }
@@ -75,6 +64,7 @@ app.controller('UserController',
             return deferred.promise;
         }
 
+        //datatable表格构造
         DTDefaultOptions.setLanguageSource("js/controllers-cus/dataTablesLanguage.json");
         vm.dpOptions = DTOptionsBuilder
             .fromFnPromise(loadUsers())
@@ -116,16 +106,14 @@ app.controller('UserController',
 
         //删除
         vm.delete = function (id) {
-            $q.when(deleteUserById(id)).then(function () {
-                reLoadData ()
-            });
+            $scope.deleteUserModal('',id)
         };
 
         //用户编辑模态框
         $scope.openUserModal = function (size, person) {
             let modalInstance = $modal.open({
-                templateUrl: 'myModalContent.html',
-                controller: 'ModalInstanceCtrl',
+                templateUrl: 'userContent.html',
+                controller: 'userModalIsCtrl',
                 size: size,
                 resolve: {
                     user:function () {
@@ -136,21 +124,42 @@ app.controller('UserController',
             });
 
             modalInstance.result.then(function (selectedItem) {
-                console.log(selectedItem);
                 //注册或修改用户
-                $q.when(signOrUpdateUser(selectedItem)).then(function () {
+                $q.when(signOrUpdateUser(selectedItem))
+                .then(function () {
                     reLoadData();
                 });
             }, function () {
                 $log.info('模态框关闭于: ' + new Date());
-                // vm.dtInstance.reloadData();
+            });
+        };
+
+        //用户删除模态框
+        $scope.deleteUserModal = function (size, id) {
+            let modalInstance = $modal.open({
+                templateUrl: 'deleteUserContent.html',
+                controller: 'deleteUserModalIsCtrl',
+                size: size,
+                resolve: {
+                    id:function () {
+                        return id;
+                    }
+
+                }
+            });
+
+            modalInstance.result.then(function (id) {
+                //注册或修改用户
+                $q.when(deleteUserById(id)).then(function () {
+                    reLoadData();
+                });
             });
         };
 
     }]);
 
 //用户编辑模态框实例
-app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'user', function($scope, $modalInstance,user) {
+app.controller('userModalIsCtrl', ['$scope', '$modalInstance', 'user', function($scope, $modalInstance,user) {
     $scope.user = user;
 
     $scope.ok = function () {
@@ -162,5 +171,16 @@ app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'user', functio
     };
 
 
-}])
-;
+}]);
+//用户删除模态框实例
+app.controller('deleteUserModalIsCtrl', ['$scope', '$modalInstance', 'id', function($scope, $modalInstance,id) {
+    $scope.ok = function () {
+        $modalInstance.close(id);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+
+}]);

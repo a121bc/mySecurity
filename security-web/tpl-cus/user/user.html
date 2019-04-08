@@ -1,16 +1,24 @@
 <div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">Datatable</h1>
+    <h1 class="m-n font-thin h3">用户管理</h1>
 </div>
 <div class="wrapper-md" ng-controller="UserController as userCtrl">
     <button class="btn m-b-xs w-xs btn-primary" ng-click="userCtrl.edit()">添加</button>
     <div class="panel panel-default">
         <div class="panel-heading">
-            DataTables{{userCtrl.msg}}
+            {{userCtrl.msg}}
         </div>
         <table datatable="" dt-options="userCtrl.dpOptions" dt-columns="userCtrl.dtColumns" dt-instance="userCtrl.dtInstance" class="table table-striped m-b-none"></table>
     </div>
 </div>
-<!--模态框-->
-<script type="text/ng-template" id="myModalContent.html">
-    <div ng-include="'tpl-cus/user/modal.html'"></div>
+<!--用户模态框-->
+<script type="text/ng-template" id="userContent.html">
+    <div ng-include="'tpl-cus/user/userModal.html'"></div>
 </script>
+<!--删除模态框-->
+<script type="text/ng-template" id="deleteUserContent.html">
+    <div ng-include="'tpl-cus/user/deleteUserModal.html'"></div>
+</script>
+<!--完成提示框-->
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->

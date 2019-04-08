@@ -14,9 +14,6 @@ app
                 var data = response.data;
                 $scope.menu_list = data.list;
                 deferred.resolve(response);
-            }, function errorCallback(response) {
-                $state.go("access.signin");
-                deferred.reject(response);
             });
 
             return deferred.promise;
