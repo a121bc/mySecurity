@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3 class="modal-title">编辑</h3>
+</div>
+<div class="col-sm-12">
+<div class="col-sm-1"></div>
+<div class="modal-body col-sm-10">
+    <!--<div class="col-sm-12">-->
+        <form name="form" class="form-validation">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="h4">编辑角色</span>
+                </div>
+                <div class="panel-body">
+                    <p class="text-muted">请填写如下信息</p>
+                    <div class="form-group">
+                        <label>角色名 <em class="text-muted">(允许 'A-Z0-9', 4-10 长度)</em></label>
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">ROLE_</span>
+                            <input type="text" class="form-control" ng-model="role.name" ng-pattern="/^[A-Z0-9]{4,10}$/" required >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>中文名</label>
+                        <input type="text" class="form-control" ng-model="role.namezh" >
+                    </div>
+                </div>
+            </div>
+        </form>
+    <!--</div>-->
+</div>
+<div class="col-sm-1"></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">取消</button>
+    <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()">确认</button>
+</div>

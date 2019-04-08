@@ -1,0 +1,22 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">角色管理</h1>
+</div>
+<div class="wrapper-md" ng-controller="RoleController as roleCtrl">
+    <button class="btn m-b-xs w-xs btn-primary" ng-click="roleCtrl.edit()">添加</button>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{roleCtrl.msg}}
+        </div>
+        <table datatable="" dt-options="roleCtrl.dpOptions" dt-columns="roleCtrl.dtColumns" dt-instance="roleCtrl.dtInstance" class="table table-striped m-b-none"></table>
+    </div>
+</div>
+<!--角色模态框-->
+<script type="text/ng-template" id="roleContent.html">
+    <div ng-include="'tpl-cus/role/roleModal.html'"></div>
+</script>
+<!--删除模态框-->
+<script type="text/ng-template" id="deleteRoleContent.html">
+    <div ng-include="'tpl-cus/role/deleteRoleModal.html'"></div>
+</script>
+<!--完成提示框-->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>

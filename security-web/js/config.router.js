@@ -45,6 +45,16 @@ angular.module('app')
                           }]
                   }
               })
+              .state('app.role', {
+                  url: '/role',
+                  templateUrl: 'tpl-cus/role/role.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables','toaster']);
+                          }]
+                  }
+              })
               .state('app.dashboard-v1', {
                   url: '/dashboard-v1',
                   templateUrl: 'tpl/app_dashboard_v1.html',

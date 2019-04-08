@@ -11,7 +11,7 @@ app.controller('UserController',
         vm.userList = [];
         vm.persons = {};
         vm.dtInstance = {};
-        vm.msg ="用户管理"
+        vm.msg ="用户管理";
 
         //加载用户列表
         function loadUsers() {
@@ -91,7 +91,7 @@ app.controller('UserController',
             return '<button class="btn btn-warning" ng-click="userCtrl.edit(userCtrl.persons[' + data.id + '])">' +
                 '   <i class="fa fa-edit"></i>' +
                 '</button>&nbsp;' +
-                '<button class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')">' +
+                '<button class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
                 '   <i class="fa fa-trash-o"></i>' +
                 '</button>';
         }
@@ -129,8 +129,6 @@ app.controller('UserController',
                 .then(function () {
                     reLoadData();
                 });
-            }, function () {
-                $log.info('模态框关闭于: ' + new Date());
             });
         };
 
