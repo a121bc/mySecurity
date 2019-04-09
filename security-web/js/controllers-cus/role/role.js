@@ -177,6 +177,7 @@ app.controller('roleModalIsCtrl', ['$scope', '$modalInstance', 'role', function(
 }]);
 //角色删除模态框实例
 app.controller('deleteRoleModalIsCtrl', ['$scope', '$modalInstance', 'id', function($scope, $modalInstance,id) {
+    $scope.msg = '请确认是否删除该角色？';
     $scope.ok = function () {
         $modalInstance.close(id);
     };

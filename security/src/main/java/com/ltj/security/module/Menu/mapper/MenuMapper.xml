@@ -24,10 +24,17 @@
         </collection>
     </resultMap>
 
-    <!--后台列表视图-->
+    <!--后台可视列表视图-->
     <resultMap id="MenuShowMap" type="com.ltj.security.module.Menu.po.Menu" extends="BaseResultMap">
         <!--子菜单-->
         <collection property="children" ofType="com.ltj.security.module.Menu.po.Menu" select="com.ltj.security.module.Menu.mapper.MenuMapper.selectShowMenu"
+                    column="id"></collection>
+    </resultMap>
+
+    <!--后台全部列表视图-->
+    <resultMap id="MenuAllMap" type="com.ltj.security.module.Menu.po.Menu" extends="BaseResultMap">
+        <!--子菜单-->
+        <collection property="children" ofType="com.ltj.security.module.Menu.po.Menu" select="com.ltj.security.module.Menu.mapper.MenuMapper.selectAllMenu"
                     column="id"></collection>
     </resultMap>
 
@@ -47,7 +54,7 @@
             m.`id` DESC
     </select>
 
-    <!--查询后台列表-->
+    <!--查询后台可视列表-->
     <select id="selectShowMenu" resultMap="MenuShowMap">
         SELECT
             m.*
@@ -56,6 +63,17 @@
         WHERE
             m.parentid = #{id}
             AND m.`enabled` = TRUE
+    </select>
+
+
+    <!--查询后台全部列表-->
+    <select id="selectAllMenu" resultMap="MenuAllMap">
+        SELECT
+            m.*
+        FROM
+            menu m
+        WHERE
+            m.parentid = #{id}
     </select>
 
 

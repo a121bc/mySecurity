@@ -73,4 +73,25 @@ public class MenuServiceImpl implements MenuService {
         return menuMapper.getAllMenu();
     }
 
+    /**
+     * @Description 后台-查询所有菜单
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author 刘天珺
+     * @Date 14:33 2019-4-9 0009
+     **/
+    @Override
+    public Map<String, Object> selectAllMenu() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("flag",false);
+        map.put("message","未查询到数据！");
+        List<Menu> list = menuMapper.selectAllMenu(1);
+        if(list.size()>0){
+            map.put("flag",true);
+            map.put("message","查询成功！");
+        }
+        map.put("list",list);
+        return map;
+    }
+
 }

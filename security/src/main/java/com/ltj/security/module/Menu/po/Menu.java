@@ -16,7 +16,7 @@ public class Menu{
     private Integer id;
 
     /* 请求路径规则 */
-    @JsonIgnore
+//    @JsonIgnore
     private String url;
 
     /* 路由path */

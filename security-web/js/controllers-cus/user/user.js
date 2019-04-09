@@ -172,6 +172,8 @@ app.controller('userModalIsCtrl', ['$scope', '$modalInstance', 'user', function(
 }]);
 //用户删除模态框实例
 app.controller('deleteUserModalIsCtrl', ['$scope', '$modalInstance', 'id', function($scope, $modalInstance,id) {
+    $scope.msg = '请确认是否删除该用户？';
+
     $scope.ok = function () {
         $modalInstance.close(id);
     };

@@ -18,4 +18,6 @@ public interface MenuService {
 
 	//查询所有菜单
 	List<Menu> getAllMenu();
+
+    Map<String, Object> selectAllMenu();
 }

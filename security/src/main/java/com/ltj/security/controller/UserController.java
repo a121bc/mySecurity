@@ -24,7 +24,7 @@ public class UserController {
     }
 
 	@RequestMapping("/deleteById")
-	public Map<String,Object> deleteByFid(@RequestParam("id") Integer id){
+	public Map<String,Object> deleteById(@RequestParam("id") Integer id){
         return userService.deleteById(id);
     }
 

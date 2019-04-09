@@ -34,20 +34,24 @@ app.factory('AuthInterceptor', ['$q','$localStorage', '$injector',function($q,$l
             }
 
             return config;
-        }/*,
+        },
         response: function (response) {
-            let stateService = $injector.get('$state');
-            if (response.status === 401) {
-                debugger
-                stateService.go("access.signin");
+            if (response.status === 200 && response.data.flag === true) {
+                let toaster = $injector.get('toaster');
+                toaster.pop('success', '', response.data.message);
             }
 
             return response || $q.when(response);
-        }*/,
+        },
         responseError: function(rejection) {
             if (rejection.status === 401) {
                 let stateService = $injector.get('$state');
                 stateService.go("access.signin");
+            }else if (rejection.status === 403) {
+                let stateService = $injector.get('$state');
+                // stateService.go("app");
+                let toaster = $injector.get('toaster');
+                toaster.pop('error', '', rejection.data.error_description);
             }
             return $q.reject(rejection);
         }

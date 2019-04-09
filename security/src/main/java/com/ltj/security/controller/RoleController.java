@@ -23,7 +23,7 @@ public class RoleController {
     }
 
 	@RequestMapping("/deleteById")
-	public Map<String,Object> deleteByFid(@RequestParam("id") Integer id){
+	public Map<String,Object> deleteById(@RequestParam("id") Integer id){
         return roleService.deleteByFid(id);
     }
 

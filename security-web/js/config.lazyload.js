@@ -151,6 +151,13 @@ angular.module('app')
                       'vendor/angular/angular-datatables/angular-datatables.min.js',
                       'vendor/jquery/datatables/dataTables.bootstrap.css'
                   ]
+              },
+              {
+                  name: 'angularBootstrapNavTreeCus',
+                  files: [
+                      'vendor/modules/angular-bootstrap-nav-tree/abn_tree_directive_cus.js',
+                      'vendor/modules/angular-bootstrap-nav-tree/abn_tree.css'
+                  ]
               }
           ]
       });

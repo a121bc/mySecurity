@@ -12,6 +12,9 @@ public interface MenuMapper extends MyMapper<Menu> {
     //获取所有菜单
     List<Menu> getAllMenu();
 
-    //查询后台列表
+    //查询后台可视列表
     List<Menu> selectShowMenu(Integer id);
+
+    //查询后台全部列表
+    List<Menu> selectAllMenu(Integer id);
 }

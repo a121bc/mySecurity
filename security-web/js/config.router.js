@@ -26,7 +26,7 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['js/controllers-cus/menu.js']);
+                              return $ocLazyLoad.load(['js/controllers-cus/menu.js','toaster']);
                           }]
                   }
               })
@@ -52,6 +52,20 @@ angular.module('app')
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
                               return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables','toaster']);
+                          }]
+                  }
+              })
+              .state('app.menu', {
+                  url: '/menu',
+                  templateUrl: 'tpl-cus/menu/menu.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                          function( $ocLazyLoad ){
+                              return $ocLazyLoad.load(['angularBootstrapNavTreeCus','toaster']).then(
+                                  function(){
+                                      return $ocLazyLoad.load('js/controllers-cus/menu/menu.js');
+                                  }
+                              );
                           }]
                   }
               })
