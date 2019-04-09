@@ -126,7 +126,6 @@ app.controller('UserController',
 
                 $q.when(signOrUpdateUser(selectedItem))
                 .then(function () {
-                    let deferred = $q.defer();
                     if (!selectedItem.id){
                         reLoadData();
                     }else {
@@ -170,7 +169,6 @@ app.controller('UserController',
                 //注册或修改用户
                 $q.when(deleteUserById(id))
                     .then(function () {
-                        let deferred = $q.defer();
                         vm.dtInstance.changeData(deleteData(id,vm.userList));
                 });
             });

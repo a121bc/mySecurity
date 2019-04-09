@@ -54,7 +54,7 @@ app.controller('RoleController',
                 });
                 return deferred.promise;
             }
-            //重载数据
+            //重载联网数据
             function reLoadData () {
                 let deferred = $q.defer();
                 let resetPaging = true;
@@ -121,9 +121,26 @@ app.controller('RoleController',
                     //注册或修改角色
                     $q.when(signOrUpdateRole(selectedItem))
                         .then(function () {
-                            reLoadData();
+                            if (!selectedItem.id){
+                                reLoadData();
+                            }else {
+                                //刷新数据
+                                vm.dtInstance.changeData(updateData(selectedItem,vm.roleList));
+                            }
                         });
                 });
+                //更新数据
+                function updateData(obj,list){
+                    let deferred = $q.defer();
+                    for(let i=0;i<list.length;i++) {
+                        if(list[i].id === obj.id){
+                            list[i] = obj;
+                            deferred.resolve(list);
+                            break;
+                        }
+                    }
+                    return deferred.promise;
+                }
             };
 
             //角色删除模态框
@@ -143,9 +160,21 @@ app.controller('RoleController',
                 modalInstance.result.then(function (id) {
                     //注册或修改角色
                     $q.when(deleteRoleById(id)).then(function () {
-                        reLoadData();
+                        vm.dtInstance.changeData(deleteData(id,vm.roleList));
                     });
                 });
+                //删除数据
+                function deleteData(id,list){
+                    let deferred = $q.defer();
+                    for(let i=0;i<list.length;i++) {
+                        if(list[i].id === id){
+                            list.splice(i,1);
+                            deferred.resolve(list);
+                            break;
+                        }
+                    }
+                    return deferred.promise;
+                }
             };
 
         }]);
