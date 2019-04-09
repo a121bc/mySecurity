@@ -123,12 +123,34 @@ app.controller('UserController',
 
             modalInstance.result.then(function (selectedItem) {
                 //注册或修改用户
+
                 $q.when(signOrUpdateUser(selectedItem))
                 .then(function () {
-                    reLoadData();
+                    let deferred = $q.defer();
+                    if (!selectedItem.id){
+                        reLoadData();
+                    }else {
+                        //刷新数据
+                        vm.dtInstance.changeData(updateData(selectedItem,vm.userList));
+                    }
                 });
             });
+            //更新数据
+            function updateData(obj,list){
+                let deferred = $q.defer();
+                for(let i=0;i<list.length;i++) {
+                    if(list[i].id === obj.id){
+                        list[i] = obj;
+                        deferred.resolve(list);
+                        break;
+                    }
+                }
+                return deferred.promise;
+            }
         };
+
+
+
 
         //用户删除模态框
         $scope.deleteUserModal = function (size, id) {
@@ -146,10 +168,24 @@ app.controller('UserController',
 
             modalInstance.result.then(function (id) {
                 //注册或修改用户
-                $q.when(deleteUserById(id)).then(function () {
-                    reLoadData();
+                $q.when(deleteUserById(id))
+                    .then(function () {
+                        let deferred = $q.defer();
+                        vm.dtInstance.changeData(deleteData(id,vm.userList));
                 });
             });
+            //删除数据
+            function deleteData(id,list){
+                let deferred = $q.defer();
+                for(let i=0;i<list.length;i++) {
+                    if(list[i].id === id){
+                        list.splice(i,1);
+                        deferred.resolve(list);
+                        break;
+                    }
+                }
+                return deferred.promise;
+            }
         };
 
     }]);

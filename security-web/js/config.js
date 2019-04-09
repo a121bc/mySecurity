@@ -36,7 +36,10 @@ app.factory('AuthInterceptor', ['$q','$localStorage', '$injector',function($q,$l
             return config;
         },
         response: function (response) {
-            if (response.status === 200 && response.data.flag === true) {
+            if(response.data.list){
+                let toaster = $injector.get('toaster');
+                toaster.pop('info', '', response.data.message);
+            }else if (response.data.flag) {
                 let toaster = $injector.get('toaster');
                 toaster.pop('success', '', response.data.message);
             }
