@@ -11,7 +11,7 @@ app.controller('MenuController', function($q,$scope, $timeout,$http,toaster) {
     };
 
     //加载资源
-    $scope.loadMenus = function() {
+    $scope.selectMenus = function() {
         let deferred = $q.defer();
         $http({
             method: 'get',
@@ -21,7 +21,6 @@ app.controller('MenuController', function($q,$scope, $timeout,$http,toaster) {
             deferred.resolve(menu_list);
         }, function errorCallback(response) {
             let data = response.data;
-            toaster.pop('error', '', data.message);
         });
 
         return deferred.promise;
@@ -34,7 +33,7 @@ app.controller('MenuController', function($q,$scope, $timeout,$http,toaster) {
 
     $scope.my_data = [];
     $scope.doing_async = true;
-    return $scope.loadMenus().then(function (list) {
+    return $scope.selectMenus().then(function (list) {
         $scope.my_data = list;
         $scope.doing_async = false;
     });

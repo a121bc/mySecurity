@@ -43,6 +43,13 @@ public class RoleServiceImpl implements RoleService {
         return map;
     }
 
+    /**
+     * @Description 查询角色
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author 刘天珺
+     * @Date 16:12 2019-4-9 0009
+     **/
 	@Override
     public Map<String,Object> selectAll() {
         Map<String, Object> map = new HashMap<>();
@@ -51,7 +58,7 @@ public class RoleServiceImpl implements RoleService {
         List<Role> list = roleMapper.selectAll();
         if(list.size()>0){
             map.put("flag",true);
-            map.put("message","查询成功！");
+            map.put("message","查询角色成功！");
         }
         map.put("list",list);
         return map;

@@ -36,7 +36,6 @@ app.controller('UserController',
                 data:user
             }).then(function successCallback(response) {
                 let data = response.data;
-                toaster.pop(data.flag?'success':'error', '', data.message);
                 deferred.resolve(data);
             });
             return deferred.promise;
@@ -51,7 +50,6 @@ app.controller('UserController',
                 params:{id:id}
             }).then(function successCallback(response) {
                 let data = response.data;
-                toaster.pop(data.flag?'success':'error', '', data.message);
                 deferred.resolve(data);
             });
             return deferred.promise;

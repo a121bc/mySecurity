@@ -4,7 +4,7 @@
 
 app
 // Menu controller
-    .controller('MenuController', ['$q','$scope', '$http', function($q,$scope,$http,) {
+    .controller('MenuShowController', ['$q','$scope', '$http', function($q,$scope,$http,) {
         $scope.loadMenus = function() {
             let deferred = $q.defer();
             $http({
@@ -18,7 +18,7 @@ app
 
             return deferred.promise;
         };
-        $scope.loadMenus();
+        return $scope.loadMenus();
 
 
 

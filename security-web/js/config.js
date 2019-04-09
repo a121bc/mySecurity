@@ -49,7 +49,7 @@ app.factory('AuthInterceptor', ['$q','$localStorage', '$injector',function($q,$l
                 stateService.go("access.signin");
             }else if (rejection.status === 403) {
                 let stateService = $injector.get('$state');
-                // stateService.go("app");
+                stateService.go("app");
                 let toaster = $injector.get('toaster');
                 toaster.pop('error', '', rejection.data.error_description);
             }

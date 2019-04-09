@@ -46,6 +46,13 @@ public class MenuServiceImpl implements MenuService {
         return map;
     }
 
+    /**
+     * @Description 加载菜单
+     * @param
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author 刘天珺
+     * @Date 16:11 2019-4-9 0009
+     **/
 	@Override
     public Map<String,Object> selectAll() {
         Map<String, Object> map = new HashMap<>();
@@ -54,7 +61,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> list = menuMapper.selectShowMenu(1);
         if(list.size()>0){
             map.put("flag",true);
-            map.put("message","查询成功！");
+            map.put("message","加载菜单成功！");
         }
         map.put("list",list);
         return map;
@@ -88,7 +95,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> list = menuMapper.selectAllMenu(1);
         if(list.size()>0){
             map.put("flag",true);
-            map.put("message","查询成功！");
+            map.put("message","查询数据成功！");
         }
         map.put("list",list);
         return map;

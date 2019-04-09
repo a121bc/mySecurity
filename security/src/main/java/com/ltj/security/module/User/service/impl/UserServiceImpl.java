@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectAllUser();
         if(list.size()>0){
             map.put("flag",true);
-            map.put("message","查询成功！");
+            map.put("message","查询用户成功！");
         }
         map.put("list",list);
         return map;

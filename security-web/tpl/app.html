@@ -4,9 +4,10 @@
   <!-- / navbar -->
 
   <!-- menu -->
-  <div data-ng-include=" 'tpl/blocks/aside.html' " ng-controller="MenuController" class="app-aside hidden-xs {{app.settings.asideColor}}">
+  <div data-ng-include=" 'tpl/blocks/aside.html' " ng-controller="MenuShowController" class="app-aside hidden-xs {{app.settings.asideColor}}">
   </div>
   <!-- / menu -->
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
 
   <!-- content -->
   <div class="app-content">
