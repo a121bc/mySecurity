@@ -27,13 +27,13 @@ public class MenuServiceImpl implements MenuService {
         Boolean flag;
         if(menu.getId()!=null){
             flag = menuMapper.updateByPrimaryKeySelective(menu)==1;
-            map.put("flag",flag);
             map.put("message",flag?"修改成功！":"修改失败！");
         }else {
             flag = menuMapper.insertSelective(menu)==1;
-            map.put("flag",flag);
             map.put("message",flag?"添加成功！":"添加失败！");
+            map.put("obj",menu);
         }
+        map.put("flag",flag);
         return map;
     }
 
@@ -95,7 +95,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> list = menuMapper.selectAllMenu(1);
         if(list.size()>0){
             map.put("flag",true);
-            map.put("message","查询数据成功！");
+            map.put("message","查询菜单成功！");
         }
         map.put("list",list);
         return map;

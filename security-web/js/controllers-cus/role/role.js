@@ -120,26 +120,27 @@ app.controller('RoleController',
                 modalInstance.result.then(function (selectedItem) {
                     //注册或修改角色
                     $q.when(signOrUpdateRole(selectedItem))
-                        .then(function () {
-                            if (!selectedItem.id){
-                                reLoadData();
+                        .then(function (data) {
+                            let deferred = $q.defer();
+                            if(data.obj) {
+                                vm.roleList.push(data.obj);
                             }else {
-                                //刷新数据
-                                vm.dtInstance.changeData(updateData(selectedItem,vm.roleList));
+                                vm.roleList = updateData(selectedItem,vm.roleList)
                             }
+                            deferred.resolve(vm.roleList);
+                            vm.dtInstance.changeData(deferred.promise);
+                            return deferred.promise;
                         });
                 });
                 //更新数据
                 function updateData(obj,list){
-                    let deferred = $q.defer();
                     for(let i=0;i<list.length;i++) {
                         if(list[i].id === obj.id){
                             list[i] = obj;
-                            deferred.resolve(list);
                             break;
                         }
                     }
-                    return deferred.promise;
+                    return list;
                 }
             };
 
@@ -170,9 +171,10 @@ app.controller('RoleController',
                         if(list[i].id === id){
                             list.splice(i,1);
                             deferred.resolve(list);
-                            break;
+                            return deferred.promise;
                         }
                     }
+                    console.log("error");
                     return deferred.promise;
                 }
             };
@@ -184,7 +186,7 @@ app.controller('roleModalIsCtrl', ['$scope', '$modalInstance', 'role', function(
     if(role && role.name && role.name.startsWith("ROLE_")){
         role.name = role.name.substr(5);
     }
-    $scope.role = role;
+    $scope.role = angular.copy(role);
 
     $scope.ok = function () {
         let name = $scope.role.name;

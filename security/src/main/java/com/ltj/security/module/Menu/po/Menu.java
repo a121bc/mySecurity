@@ -39,7 +39,6 @@ public class Menu{
     private Boolean requireauth;
 
     /* 父菜单id */
-    @JsonIgnore
     private Integer parentid;
 
     /* 是否可用 */

@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService {
         }
         if(user.getId()!=null){
             flag = userMapper.updateUserSelective(user)>=1;
-            map.put("flag",flag);
             map.put("message",flag?"修改成功！":"修改失败！");
         }else {
             flag = userMapper.insertUserSelective(user)>=1;
-            map.put("flag",flag);
             map.put("message",flag?"添加成功！":"添加失败！");
+            map.put("obj",user);
         }
+        map.put("flag",flag);
         return map;
     }
 

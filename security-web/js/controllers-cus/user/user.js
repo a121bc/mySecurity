@@ -123,28 +123,28 @@ app.controller('UserController',
 
             modalInstance.result.then(function (selectedItem) {
                 //注册或修改用户
-
                 $q.when(signOrUpdateUser(selectedItem))
-                .then(function () {
-                    if (!selectedItem.id){
-                        reLoadData();
+                .then(function (data) {
+                    let deferred = $q.defer();
+                    if(data.obj) {
+                        vm.userList.push(data.obj);
                     }else {
-                        //刷新数据
-                        vm.dtInstance.changeData(updateData(selectedItem,vm.userList));
+                        vm.userList = updateData(selectedItem,vm.userList)
                     }
+                    deferred.resolve(vm.userList);
+                    vm.dtInstance.changeData(deferred.promise);
+                    return deferred.promise;
                 });
             });
-            //更新数据
+            //更新集合
             function updateData(obj,list){
-                let deferred = $q.defer();
                 for(let i=0;i<list.length;i++) {
                     if(list[i].id === obj.id){
                         list[i] = obj;
-                        deferred.resolve(list);
                         break;
                     }
                 }
-                return deferred.promise;
+                return list;
             }
         };
 
@@ -190,7 +190,7 @@ app.controller('UserController',
 
 //用户编辑模态框实例
 app.controller('userModalIsCtrl', ['$scope', '$modalInstance', 'user', function($scope, $modalInstance,user) {
-    $scope.user = user;
+    $scope.user = angular.copy(user);
 
     $scope.ok = function () {
         $modalInstance.close($scope.user);

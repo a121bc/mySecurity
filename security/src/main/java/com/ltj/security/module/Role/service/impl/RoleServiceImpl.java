@@ -24,13 +24,13 @@ public class RoleServiceImpl implements RoleService {
         Boolean flag;
         if(role.getId()!=null){
             flag = roleMapper.updateByPrimaryKeySelective(role)==1;
-            map.put("flag",flag);
             map.put("message",flag?"修改成功！":"修改失败！");
         }else {
             flag = roleMapper.insertSelective(role)==1;
-            map.put("flag",flag);
             map.put("message",flag?"添加成功！":"添加失败！");
+            map.put("obj",role);
         }
+        map.put("flag",flag);
         return map;
     }
 
