@@ -7,7 +7,18 @@
   <div data-ng-include=" 'tpl/blocks/aside.html' " ng-controller="MenuShowController" class="app-aside hidden-xs {{app.settings.asideColor}}">
   </div>
   <!-- / menu -->
+
+  <!--toaster-->
   <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <!--/ toaster-->
+
+  <!--modal-->
+  <!--删除模态框-->
+  <script type="text/ng-template" id="deleteModal.html">
+    <div ng-include="'tpl-cus/modal/confirmModal.html'"></div>
+  </script>
+  <!--/ modal-->
+
 
   <!-- content -->
   <div class="app-content">

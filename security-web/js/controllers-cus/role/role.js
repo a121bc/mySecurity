@@ -4,8 +4,8 @@
 
 // 角色 controller
 app.controller('RoleController',
-    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal', '$log','toaster',
-        function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal,$log,toaster) {
+    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal',
+        function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal) {
             let vm = this;
 
             vm.roleList = [];
@@ -54,13 +54,6 @@ app.controller('RoleController',
                 });
                 return deferred.promise;
             }
-            //重载联网数据
-            function reLoadData () {
-                let deferred = $q.defer();
-                let resetPaging = true;
-                vm.dtInstance.changeData(loadRoles(),resetPaging);
-                return deferred.promise;
-            }
 
             //datatable表格构造
             DTDefaultOptions.setLanguageSource("js/controllers-cus/dataTablesLanguage.json");
@@ -91,20 +84,19 @@ app.controller('RoleController',
             }
             //编辑
             vm.edit = function (role) {
-                // vm.dtInstance.reloadData();
                 if(!role){
                     role = {};
                 }
-                $scope.openRoleModal('lg', role);
+                openRoleModal('lg', role);
             };
 
             //删除
             vm.delete = function (id) {
-                $scope.deleteRoleModal('',id)
+                deleteRoleModal('',id);
             };
 
             //角色编辑模态框
-            $scope.openRoleModal = function (size, role) {
+            function openRoleModal(size, role) {
                 let modalInstance = $modal.open({
                     templateUrl: 'roleContent.html',
                     controller: 'roleModalIsCtrl',
@@ -142,12 +134,12 @@ app.controller('RoleController',
                     }
                     return list;
                 }
-            };
+            }
 
             //角色删除模态框
-            $scope.deleteRoleModal = function (size, id) {
+             function deleteRoleModal(size, id) {
                 let modalInstance = $modal.open({
-                    templateUrl: 'deleteRoleContent.html',
+                    templateUrl: 'deleteModal.html',
                     controller: 'deleteRoleModalIsCtrl',
                     size: size,
                     resolve: {
@@ -177,7 +169,7 @@ app.controller('RoleController',
                     console.log("error");
                     return deferred.promise;
                 }
-            };
+            }
 
         }]);
 
@@ -198,7 +190,6 @@ app.controller('roleModalIsCtrl', ['$scope', '$modalInstance', 'role', function(
     };
 
     $scope.cancel = function () {
-        console.log($scope.role)
         $modalInstance.dismiss('cancel');
     };
 

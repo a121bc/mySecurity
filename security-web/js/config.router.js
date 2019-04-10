@@ -41,7 +41,7 @@ angular.module('app')
                                       return $ocLazyLoad.load(['js/controllers-cus/user/user.js','datatables','toaster']);
                                   }
                               );*/
-                              return $ocLazyLoad.load(['js/controllers-cus/user/user.js','datatables','toaster']);
+                              return $ocLazyLoad.load(['js/controllers-cus/user/user.js','datatables']);
                           }]
                   }
               })
@@ -51,7 +51,7 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables','toaster']);
+                              return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables']);
                           }]
                   }
               })
@@ -61,7 +61,7 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['angularBootstrapNavTreeCus','toaster']).then(
+                              return $ocLazyLoad.load(['angularBootstrapNavTreeCus']).then(
                                   function(){
                                       return $ocLazyLoad.load('js/controllers-cus/menu/menu.js');
                                   }

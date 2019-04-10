@@ -4,8 +4,8 @@
 
 // 用户 controller
 app.controller('UserController',
-    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal', '$log','toaster',
-    function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal,$log,toaster) {
+    ['$q', '$scope', '$http', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTDefaultOptions', '$compile', '$modal',
+    function($q,$scope,$http,DTOptionsBuilder,DTColumnBuilder,DTDefaultOptions,$compile,$modal) {
         let vm = this;
 
         vm.userList = [];
@@ -54,13 +54,6 @@ app.controller('UserController',
             });
             return deferred.promise;
         }
-        //重载数据
-        function reLoadData () {
-            let deferred = $q.defer();
-            let resetPaging = true;
-            vm.dtInstance.changeData(loadUsers(),resetPaging);
-            return deferred.promise;
-        }
 
         //datatable表格构造
         DTDefaultOptions.setLanguageSource("js/controllers-cus/dataTablesLanguage.json");
@@ -99,16 +92,16 @@ app.controller('UserController',
             if(!person){
                 person = {};
             }
-            $scope.openUserModal('lg', person);
+            openUserModal('lg', person);
         };
 
         //删除
         vm.delete = function (id) {
-            $scope.deleteUserModal('',id)
+            deleteUserModal('',id);
         };
 
         //用户编辑模态框
-        $scope.openUserModal = function (size, person) {
+        function openUserModal(size, person) {
             let modalInstance = $modal.open({
                 templateUrl: 'userContent.html',
                 controller: 'userModalIsCtrl',
@@ -146,15 +139,12 @@ app.controller('UserController',
                 }
                 return list;
             }
-        };
-
-
-
+        }
 
         //用户删除模态框
-        $scope.deleteUserModal = function (size, id) {
+         function deleteUserModal(size, id) {
             let modalInstance = $modal.open({
-                templateUrl: 'deleteUserContent.html',
+                templateUrl: 'deleteModal.html',
                 controller: 'deleteUserModalIsCtrl',
                 size: size,
                 resolve: {
@@ -184,7 +174,7 @@ app.controller('UserController',
                 }
                 return deferred.promise;
             }
-        };
+        }
 
     }]);
 

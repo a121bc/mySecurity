@@ -303,6 +303,20 @@
                 tree.add_branch(null, new_branch);
                 return new_branch;
               };
+              tree.delete_branch = function(branch) {
+                let childArr = scope.treeData;
+                let parent_b = get_parent(branch);
+                if(parent_b) {
+                  childArr = parent_b.children;
+                }
+                  for (let i=0;i<childArr.length;i++) {
+                    if(childArr[i] === branch){
+                      return childArr.splice(i,1);
+                    }
+                  }
+
+              };
+
               tree.expand_branch = function(b) {
                 if (b == null) {
                   b = tree.get_selected_branch();

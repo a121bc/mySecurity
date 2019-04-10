@@ -30,6 +30,9 @@
             <div class="m-t-sm m-b-sm">
                 <button ng-click="addBranch(1)" class="btn btn-success btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i> 添加分支</button>
             </div>
+            <div class="m-t-sm m-b-sm">
+                <button ng-click="delete()" ng-disabled="menu.children.length!==0" class="btn btn-danger btn-sm"><i class="fa fa-fw m-r-xs fa-plus"></i> 删除分支</button>
+            </div>
         </div>
     </div>
     <div class="col w-lg bg-light b-r bg-auto">
