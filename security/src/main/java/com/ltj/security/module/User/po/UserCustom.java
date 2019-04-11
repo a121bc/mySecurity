@@ -11,5 +11,7 @@ import java.util.List;
  */
 @Data
 public class UserCustom extends User {
+
+    /* 角色ids */
     private Integer[] rids;
 }

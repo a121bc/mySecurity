@@ -1,7 +1,10 @@
 package com.ltj.security.module.Role.service.impl;
 
+import com.ltj.security.module.Menu.mapper.MenuMapper;
+import com.ltj.security.module.Menu.po.Menu;
 import com.ltj.security.module.Role.mapper.RoleMapper;
 import com.ltj.security.module.Role.po.Role;
+import com.ltj.security.module.Role.po.RoleCustom;
 import com.ltj.security.module.Role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	private RoleMapper roleMapper;
+	@Autowired
+    private MenuMapper menuMapper;
 
 	@Override
 	public Map<String,Object> insertOrUpdate(Role role) {
@@ -55,12 +60,13 @@ public class RoleServiceImpl implements RoleService {
         Map<String, Object> map = new HashMap<>();
         map.put("flag",false);
         map.put("message","未查询到数据！");
-        List<Role> list = roleMapper.selectAll();
+        List<RoleCustom> list = roleMapper.selectAllRoleMenu();
         if(list.size()>0){
             map.put("flag",true);
             map.put("message","查询角色成功！");
         }
         map.put("list",list);
+        map.put("menuList",menuMapper.selectAllMenu(1));
         return map;
     }
 

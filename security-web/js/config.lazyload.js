@@ -158,6 +158,13 @@ angular.module('app')
                       'vendor/modules/angular-bootstrap-nav-tree/abn_tree_directive_cus.js',
                       'vendor/modules/angular-bootstrap-nav-tree/abn_tree.css'
                   ]
+              },
+              {
+                  name: 'angularBootstrapNavTreeCheckBox',
+                  files: [
+                      'vendor/modules/angular-bootstrap-nav-tree/abn_tree_directive_checkbox.js',
+                      'vendor/modules/angular-bootstrap-nav-tree/abn_tree.css'
+                  ]
               }
           ]
       });

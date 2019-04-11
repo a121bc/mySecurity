@@ -9,6 +9,7 @@ app.controller('RoleController',
             let vm = this;
 
             vm.roleList = [];
+            vm.menuList = [];
             vm.roles = {};
             vm.dtInstance = {};
             vm.msg ="角色管理";
@@ -22,6 +23,7 @@ app.controller('RoleController',
                 }).then(function successCallback(response) {
                     let data = response.data;
                     vm.roleList = data.list;
+                    vm.menuList = data.menuList;
                     deferred.resolve(data.list);
                 });
                 return deferred.promise;
@@ -75,12 +77,15 @@ app.controller('RoleController',
             ];
             function actionsHtml(data, type, full, meta) {
                 vm.roles[data.id] = data;
-                return '<button class="btn btn-warning" ng-click="roleCtrl.edit(roleCtrl.roles[' + data.id + '])">' +
+                return '<nobr><button title="编辑" class="btn btn-warning" ng-click="roleCtrl.edit(roleCtrl.roles[' + data.id + '])">' +
                     '   <i class="fa fa-edit"></i>' +
                     '</button>&nbsp;' +
-                    '<button class="btn btn-danger" ng-click="roleCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
+                    '<button title="管理菜单" class="btn btn-info" ng-click="roleCtrl.selectMenu(roleCtrl.roles[' + data.id + '])" >' +
+                    '   <i class="fa fa-list-ol"></i>' +
+                    '</button>&nbsp;'+
+                    '<button title="删除" class="btn btn-danger" ng-click="roleCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
                     '   <i class="fa fa-trash-o"></i>' +
-                    '</button>';
+                    '</button></nobr>';
             }
             //编辑
             vm.edit = function (role) {
@@ -88,6 +93,11 @@ app.controller('RoleController',
                     role = {};
                 }
                 openRoleModal('lg', role);
+            };
+
+            //管理菜单
+            vm.selectMenu = function(role) {
+                openRoleMenuModal('', role,vm.menuList)
             };
 
             //删除
@@ -171,6 +181,30 @@ app.controller('RoleController',
                 }
             }
 
+            //菜单模态框
+            function openRoleMenuModal(size, role,menuList) {
+                let modalInstance = $modal.open({
+                    templateUrl: 'roleMenuContent.html',
+                    controller: 'roleMenuCtrl',
+                    size: size,
+                    resolve: {
+                        mids:function () {
+                            return role.mids;
+                        },
+                        menuList:function () {
+                            return menuList;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function (rids) {
+
+
+
+                });
+
+            }
+
         }]);
 
 //角色编辑模态框实例
@@ -208,3 +242,49 @@ app.controller('deleteRoleModalIsCtrl', ['$scope', '$modalInstance', 'id', funct
 
 
 }]);
+
+//用户角色编辑模态框实例
+app.controller('roleMenuCtrl', function($scope, $modalInstance,mids,menuList) {
+    let tree;
+    let menu_ids = mids;
+
+    function travTree(mList) {
+        for(let i=0;i<mList.length;i++) {
+            mList[i].choose = menu_ids.includes(mList[i].id);
+            if(mList[i].children.length>0){
+                travTree(mList[i].children);
+            }
+        }
+    }
+    travTree(menuList);
+
+    $scope.menuList = angular.copy(menuList);
+    //初始化载入数据
+    $scope.my_tree = tree = {};
+    $scope.doing_async = true;
+    $scope.my_data = menuList;
+    $scope.doing_async = false;
+
+
+
+    $scope.cons = function() {
+        /*let menuArr = tree.get_tree_rows();
+        angular.forEach(menuArr,function (e,i,arr) {
+            e.choose = menu_ids.includes(e.branch.id);
+            console.log(e.choose);
+        });*/
+        console.log(menuArr);
+    };
+
+
+    $scope.ok = function () {
+        let mids = $scope.menuList.filter(e => e.choose===true).map(e => e.id);
+        $modalInstance.close(mids);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+
+});

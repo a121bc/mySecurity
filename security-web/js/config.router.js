@@ -51,7 +51,7 @@ angular.module('app')
                   resolve: {
                       deps: ['$ocLazyLoad',
                           function( $ocLazyLoad ){
-                              return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables']);
+                              return $ocLazyLoad.load(['js/controllers-cus/role/role.js','datatables','angularBootstrapNavTreeCheckBox']);
                           }]
                   }
               })

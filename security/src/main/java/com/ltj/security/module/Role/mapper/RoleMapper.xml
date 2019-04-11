@@ -7,4 +7,17 @@
         <result column="namezh" property="namezh" jdbcType="VARCHAR" />
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
+
+    <resultMap id="RoleMenuMap" type="com.ltj.security.module.Role.po.RoleCustom" extends="BaseResultMap">
+        <collection property="mids" jdbcType="INTEGER" column="id" select="com.ltj.security.module.Role.mapper.RoleMapper.selectMenuIdsByRid">
+        </collection>
+    </resultMap>
+
+    <select id="selectAllRoleMenu" resultMap="RoleMenuMap">
+        SELECT * FROM role
+    </select>
+
+    <select id="selectMenuIdsByRid" resultType="java.lang.Integer">
+        SELECT mid FROM menu_role WHERE rid = #{id}
+    </select>
 </mapper>

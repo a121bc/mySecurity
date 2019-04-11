@@ -81,15 +81,15 @@ app.controller('UserController',
         ];
         function actionsHtml(data, type, full, meta) {
             vm.persons[data.id] = data;
-            return '<button class="btn btn-warning" ng-click="userCtrl.edit(userCtrl.persons[' + data.id + '])">' +
+            return '<nobr> <button title="编辑" class="btn btn-warning" ng-click="userCtrl.edit(userCtrl.persons[' + data.id + '])">' +
                 '   <i class="fa fa-edit"></i>' +
                 '</button>&nbsp;' +
-                '<button class="btn btn-info" ng-click="userCtrl.selectRole(userCtrl.persons[' + data.id + '])" >' +
+                '<button title="管理角色" class="btn btn-info" ng-click="userCtrl.selectRole(userCtrl.persons[' + data.id + '])" >' +
                 '   <i class="fa fa-mortar-board"></i>' +
                 '</button>&nbsp;'+
-                '<button class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
+                '<button title="删除" class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
                 '   <i class="fa fa-trash-o"></i>' +
-                '</button>';
+                '</button> </nobr>';
         }
         //编辑
         vm.edit = function (person) {
