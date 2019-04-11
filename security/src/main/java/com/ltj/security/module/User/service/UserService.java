@@ -16,5 +16,6 @@ public interface UserService extends UserDetailsService {
 	//查询所有记录
 	Map<String,Object> selectAll();
 
-
+	//修改用户角色
+    Map<String, Object> insertUserRole(Integer id, Integer[] arr);
 }

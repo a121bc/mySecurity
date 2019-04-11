@@ -9,6 +9,7 @@ app.controller('UserController',
         let vm = this;
 
         vm.userList = [];
+        vm.roleList = [];
         vm.persons = {};
         vm.dtInstance = {};
         vm.msg ="用户管理";
@@ -22,6 +23,7 @@ app.controller('UserController',
             }).then(function successCallback(response) {
                 let data = response.data;
                 vm.userList = data.list;
+                vm.roleList = data.roleList;
                 deferred.resolve(data.list);
             });
             return deferred.promise;
@@ -82,6 +84,9 @@ app.controller('UserController',
             return '<button class="btn btn-warning" ng-click="userCtrl.edit(userCtrl.persons[' + data.id + '])">' +
                 '   <i class="fa fa-edit"></i>' +
                 '</button>&nbsp;' +
+                '<button class="btn btn-info" ng-click="userCtrl.selectRole(userCtrl.persons[' + data.id + '])" >' +
+                '   <i class="fa fa-mortar-board"></i>' +
+                '</button>&nbsp;'+
                 '<button class="btn btn-danger" ng-click="userCtrl.delete(' + data.id + ')" ng-if="'+data.id+' !=1">' +
                 '   <i class="fa fa-trash-o"></i>' +
                 '</button>';
@@ -95,10 +100,38 @@ app.controller('UserController',
             openUserModal('lg', person);
         };
 
+        //查询角色
+        vm.selectRole = function(person) {
+
+            openUserRoleModal('',person,vm.roleList);
+        };
+
         //删除
         vm.delete = function (id) {
             deleteUserModal('',id);
         };
+
+        //角色模态框
+        function openUserRoleModal(size, person,roleList) {
+            let modalInstance = $modal.open({
+                templateUrl: 'userRoleContent.html',
+                controller: 'userRoleCtrl',
+                size: size,
+                resolve: {
+                    roles:function () {
+                        return person.roles;
+                    },
+                    roleList:function () {
+                        return roleList;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+
+            });
+
+        }
 
         //用户编辑模态框
         function openUserModal(size, person) {
@@ -179,7 +212,7 @@ app.controller('UserController',
     }]);
 
 //用户编辑模态框实例
-app.controller('userModalIsCtrl', ['$scope', '$modalInstance', 'user', function($scope, $modalInstance,user) {
+app.controller('userModalIsCtrl', function($scope, $modalInstance,user) {
     $scope.user = angular.copy(user);
 
     $scope.ok = function () {
@@ -191,9 +224,33 @@ app.controller('userModalIsCtrl', ['$scope', '$modalInstance', 'user', function(
     };
 
 
-}]);
+});
+//用户角色编辑模态框实例
+app.controller('userRoleCtrl', function($scope, $modalInstance,roles,roleList) {
+    // $scope.roles = angular.copy(roles);
+    // $scope.roleList = angular.copy(roleList);
+    let role_ids = roles.map(e => e.id);
+
+    angular.forEach(roleList,function (e,i,arr) {
+        e.choose = role_ids.includes(e.id);
+    });
+    $scope.roleList = angular.copy(roleList);
+
+
+
+    $scope.ok = function () {
+        let ids = $scope.roleList.filter(e => e.choose===true).map(e => e.id);
+        $modalInstance.close(ids);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+
+});
 //用户删除模态框实例
-app.controller('deleteUserModalIsCtrl', ['$scope', '$modalInstance', 'id', function($scope, $modalInstance,id) {
+app.controller('deleteUserModalIsCtrl', function($scope, $modalInstance,id) {
     $scope.msg = '请确认是否删除该用户？';
 
     $scope.ok = function () {
@@ -205,4 +262,4 @@ app.controller('deleteUserModalIsCtrl', ['$scope', '$modalInstance', 'id', funct
     };
 
 
-}]);
+});

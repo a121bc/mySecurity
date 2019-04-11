@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/Userrole")
-public class UserroleController {
+@RequestMapping("/UserRole")
+public class UserRoleController {
 
 	@Autowired
-	private UserRoleService userroleService;
+	private UserRoleService userRoleService;
 
 	@RequestMapping("/insertOrUpdate")
 	public Map<String,Object> insertOrUpdate(UserRole userRole){
-        return userroleService.insertOrUpdate(userRole);
+        return userRoleService.insertOrUpdate(userRole);
     }
 
 	@RequestMapping("/deleteByFid")
 	public Map<String,Object> deleteByFid(Integer fid){
-        return userroleService.deleteByFid(fid);
+        return userRoleService.deleteByFid(fid);
     }
 
 	@RequestMapping("/selectAll")
 	public Map<String,Object> selectAll(){
-        return userroleService.selectAll();
+        return userRoleService.selectAll();
     }
 
 }

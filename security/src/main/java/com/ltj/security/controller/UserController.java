@@ -33,4 +33,18 @@ public class UserController {
 		return userService.selectAll();
     }
 
+    /**
+     * @Description 修改用户角色
+     * @param id
+     * @param arr
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author 刘天珺
+     * @Date 16:36 2019-4-10 0010
+     **/
+    @RequestMapping("/insertUserRole")
+	public Map<String,Object> insertUserRole(@RequestBody Integer id,@RequestBody Integer[] arr){
+		return userService.insertUserRole(id,arr);
+	}
+
+
 }

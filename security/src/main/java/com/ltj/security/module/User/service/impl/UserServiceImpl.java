@@ -1,8 +1,10 @@
 package com.ltj.security.module.User.service.impl;
 
+import com.ltj.security.module.Role.mapper.RoleMapper;
 import com.ltj.security.module.User.mapper.UserMapper;
 import com.ltj.security.module.User.po.User;
 import com.ltj.security.module.User.service.UserService;
+import com.ltj.security.module.UserRole.mapper.UserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +23,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+    private RoleMapper roleMapper;
+	@Autowired
+    private UserRoleMapper userRoleMapper;
 
 	/**
 	 * @Description 注册 修改用户
@@ -82,7 +88,25 @@ public class UserServiceImpl implements UserService {
             map.put("message","查询用户成功！");
         }
         map.put("list",list);
+        map.put("roleList",roleMapper.selectAll());
         return map;
+    }
+
+    /**
+     * @Description 修改用户角色
+     * @param id
+     * @param arr
+     * @return java.util.Map<java.lang.String,java.lang.Object>
+     * @author 刘天珺
+     * @Date 16:37 2019-4-10 0010
+     **/
+    @Override
+    public Map<String, Object> insertUserRole(Integer id, Integer[] arr) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("flag",false);
+        map.put("message","修改失败！");
+//        userRoleMapper.insertUserRoleList(id,arr);
+        return null;
     }
 
     /**

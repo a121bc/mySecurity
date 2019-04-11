@@ -15,8 +15,16 @@
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.ltj.security.module.User.po.User" extends="BaseResultMap">
-        <collection property="roles" ofType="com.ltj.security.module.Role" select="com.ltj.security.module.User.mapper.UserMapper.getUserRolesByUid"
+        <collection property="roles" ofType="com.ltj.security.module.Role.po.Role" select="com.ltj.security.module.User.mapper.UserMapper.getUserRolesByUid"
                     column="id"></collection>
+    </resultMap>
+
+    <resultMap id="UserRoleMap" type="com.ltj.security.module.User.po.User" extends="BaseResultMap">
+        <collection property="roles" ofType="com.ltj.security.module.Role.po.Role">
+            <id column="role_id" property="id" jdbcType="INTEGER" />
+            <result column="role_name" property="name" jdbcType="VARCHAR" />
+            <result column="role_namezh" property="namezh" jdbcType="VARCHAR" />
+        </collection>
     </resultMap>
 
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
@@ -26,8 +34,15 @@
         SELECT * FROM role r,user_role ur where r.id = ur.rid AND ur.uid = #{id}
     </select>
 
-    <select id="selectAllUser" resultMap="BaseResultMap">
-        SELECT * FROM user
+    <select id="selectAllUser" resultMap="UserRoleMap">
+        SELECT
+            u.*,
+            r.id AS role_id,
+            r.name AS role_name,
+            r.namezh AS role_namezh
+        FROM user AS u
+            LEFT JOIN user_role AS ur ON u.id = ur.uid
+            LEFT JOIN role AS r ON ur.rid = r.id
     </select>
 
     <!--注册用户-->

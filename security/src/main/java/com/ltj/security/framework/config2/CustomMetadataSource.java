@@ -42,8 +42,8 @@ public class CustomMetadataSource implements FilterInvocationSecurityMetadataSou
                 return SecurityConfig.createList(values);
             }
         }
-        //没有匹配上的资源，都是登录访问
-        return SecurityConfig.createList("ROLE_LOGIN");
+        //没有匹配上的资源，都是管理员访问
+        return SecurityConfig.createList("ROLE_ADMIN");
     }
 
     @Override
