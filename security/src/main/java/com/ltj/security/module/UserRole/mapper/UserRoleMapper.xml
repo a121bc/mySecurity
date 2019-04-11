@@ -5,6 +5,20 @@
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="uid" property="uid" jdbcType="INTEGER" />
         <result column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
+
+    <insert id="insertUserRoleList">
+        INSERT INTO user_role
+        (uid,rid)
+        VALUES
+        <foreach collection="rids" index="index" item="rid" separator=",">
+            (#{uid},#{rid})
+        </foreach>
+    </insert>
+    
+    <delete id="deleteByUid">
+        DELETE FROM user_role WHERE uid = #{uid}
+    </delete>
 </mapper>

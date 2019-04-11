@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
 public class MenuRole{
@@ -16,5 +17,11 @@ public class MenuRole{
 
     /* 角色id */
     private Integer rid;
+
+    /* 操作人id */
+    private Integer modify_userid;
+
+    /* 操作日期 */
+    private Date modifydate;
 
 }

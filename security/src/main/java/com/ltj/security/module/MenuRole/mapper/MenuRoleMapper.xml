@@ -5,5 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="mid" property="mid" jdbcType="INTEGER" />
         <result column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
+        <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
 </mapper>

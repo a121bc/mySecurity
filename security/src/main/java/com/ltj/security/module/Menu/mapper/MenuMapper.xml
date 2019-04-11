@@ -12,6 +12,8 @@
         <result column="requireauth" property="requireauth" jdbcType="INTEGER" />
         <result column="parentid" property="parentid" jdbcType="INTEGER" />
         <result column="enabled" property="enabled" jdbcType="INTEGER" />
+        <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
+        <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <!--后台管理视图-->

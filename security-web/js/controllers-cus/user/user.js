@@ -118,8 +118,8 @@ app.controller('UserController',
                 controller: 'userRoleCtrl',
                 size: size,
                 resolve: {
-                    roles:function () {
-                        return person.roles;
+                    rids:function () {
+                        return person.rids;
                     },
                     roleList:function () {
                         return roleList;
@@ -127,7 +127,24 @@ app.controller('UserController',
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
+            modalInstance.result.then(function (rids) {
+
+                let deferred = $q.defer();
+                $http({
+                    method: 'POST',
+                    url:appurl+'/User/insertUserRole',
+                    data:{
+                        uid:person.id,
+                        rids:rids
+                    }
+                }).then(function successCallback(response) {
+                    let data = response.data;
+                    if(data.flag) {
+                        person.rids = rids;
+                    }
+                    deferred.resolve(data);
+                });
+                return deferred.promise;
 
             });
 
@@ -226,10 +243,10 @@ app.controller('userModalIsCtrl', function($scope, $modalInstance,user) {
 
 });
 //用户角色编辑模态框实例
-app.controller('userRoleCtrl', function($scope, $modalInstance,roles,roleList) {
+app.controller('userRoleCtrl', function($scope, $modalInstance,rids,roleList) {
     // $scope.roles = angular.copy(roles);
     // $scope.roleList = angular.copy(roleList);
-    let role_ids = roles.map(e => e.id);
+    let role_ids = rids;
 
     angular.forEach(roleList,function (e,i,arr) {
         e.choose = role_ids.includes(e.id);
@@ -239,8 +256,8 @@ app.controller('userRoleCtrl', function($scope, $modalInstance,roles,roleList) {
 
 
     $scope.ok = function () {
-        let ids = $scope.roleList.filter(e => e.choose===true).map(e => e.id);
-        $modalInstance.close(ids);
+        let rids = $scope.roleList.filter(e => e.choose===true).map(e => e.id);
+        $modalInstance.close(rids);
     };
 
     $scope.cancel = function () {

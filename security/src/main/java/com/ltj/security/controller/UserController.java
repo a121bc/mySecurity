@@ -2,6 +2,7 @@ package com.ltj.security.controller;
 
 import com.ltj.security.module.User.po.User;
 import com.ltj.security.module.User.service.UserService;
+import com.ltj.security.module.UserRole.po.UserRoleCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,15 +36,14 @@ public class UserController {
 
     /**
      * @Description 修改用户角色
-     * @param id
-     * @param arr
+     * @param userRoleCustom
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @author 刘天珺
      * @Date 16:36 2019-4-10 0010
      **/
     @RequestMapping("/insertUserRole")
-	public Map<String,Object> insertUserRole(@RequestBody Integer id,@RequestBody Integer[] arr){
-		return userService.insertUserRole(id,arr);
+	public Map<String,Object> insertUserRole(@RequestBody UserRoleCustom userRoleCustom){
+		return userService.insertUserRole(userRoleCustom);
 	}
 
 

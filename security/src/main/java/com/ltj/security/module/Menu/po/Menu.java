@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -50,5 +51,11 @@ public class Menu{
 
     /* 子菜单 */
     private List<Menu> children;
+
+    /* 操作人id */
+    private Integer modify_userid;
+
+    /* 操作日期 */
+    private Date modifydate;
 
 }

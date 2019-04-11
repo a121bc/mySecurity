@@ -19,11 +19,8 @@
                     column="id"></collection>
     </resultMap>
 
-    <resultMap id="UserRoleMap" type="com.ltj.security.module.User.po.User" extends="BaseResultMap">
-        <collection property="roles" ofType="com.ltj.security.module.Role.po.Role">
-            <id column="role_id" property="id" jdbcType="INTEGER" />
-            <result column="role_name" property="name" jdbcType="VARCHAR" />
-            <result column="role_namezh" property="namezh" jdbcType="VARCHAR" />
+    <resultMap id="UserRoleMap" type="com.ltj.security.module.User.po.UserCustom" extends="BaseResultMap">
+        <collection property="rids" jdbcType="INTEGER" column="id" select="com.ltj.security.module.User.mapper.UserMapper.selectRoleIdsByUid">
         </collection>
     </resultMap>
 
@@ -35,14 +32,10 @@
     </select>
 
     <select id="selectAllUser" resultMap="UserRoleMap">
-        SELECT
-            u.*,
-            r.id AS role_id,
-            r.name AS role_name,
-            r.namezh AS role_namezh
-        FROM user AS u
-            LEFT JOIN user_role AS ur ON u.id = ur.uid
-            LEFT JOIN role AS r ON ur.rid = r.id
+        SELECT * FROM user
+    </select>
+    <select id="selectRoleIdsByUid" resultType="java.lang.Integer">
+        SELECT rid FROM user_role  where uid = #{id}
     </select>
 
     <!--注册用户-->

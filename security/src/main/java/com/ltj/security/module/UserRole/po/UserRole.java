@@ -18,6 +18,9 @@ public class UserRole{
     /* 角色表id */
     private Integer rid;
 
+    /* 操作人id */
+    private Integer modify_userid;
+
     /* 操作日期 */
     private Date modifydate;
 

@@ -3,8 +3,10 @@ package com.ltj.security.module.User.service.impl;
 import com.ltj.security.module.Role.mapper.RoleMapper;
 import com.ltj.security.module.User.mapper.UserMapper;
 import com.ltj.security.module.User.po.User;
+import com.ltj.security.module.User.po.UserCustom;
 import com.ltj.security.module.User.service.UserService;
 import com.ltj.security.module.UserRole.mapper.UserRoleMapper;
+import com.ltj.security.module.UserRole.po.UserRoleCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -82,7 +84,7 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("flag",false);
         map.put("message","未查询到数据！");
-        List<User> list = userMapper.selectAllUser();
+        List<UserCustom> list = userMapper.selectAllUser();
         if(list.size()>0){
             map.put("flag",true);
             map.put("message","查询用户成功！");
@@ -94,19 +96,21 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @Description 修改用户角色
-     * @param id
-     * @param arr
+     * @param userRoleCustom
      * @return java.util.Map<java.lang.String,java.lang.Object>
      * @author 刘天珺
      * @Date 16:37 2019-4-10 0010
      **/
     @Override
-    public Map<String, Object> insertUserRole(Integer id, Integer[] arr) {
+    public Map<String, Object> insertUserRole(UserRoleCustom userRoleCustom) {
         Map<String, Object> map = new HashMap<>();
-        map.put("flag",false);
-        map.put("message","修改失败！");
-//        userRoleMapper.insertUserRoleList(id,arr);
-        return null;
+        //新增角色关系
+        userRoleMapper.deleteByUid(userRoleCustom.getUid());
+        //删除角色关系
+        Boolean flag = userRoleMapper.insertUserRoleList(userRoleCustom)>0;
+        map.put("flag",flag);
+        map.put("message",flag?"修改成功":"修改失败！");
+        return map;
     }
 
     /**
@@ -122,7 +126,6 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }
-        //user.setRoles(userMapper.getUserRolesByUid(user.getId()));
         return user;
     }
 

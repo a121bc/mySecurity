@@ -3,6 +3,7 @@ package com.ltj.security.module.User.mapper;
 import com.ltj.security.framework.Util.MyMapper;
 import com.ltj.security.module.Role.po.Role;
 import com.ltj.security.module.User.po.User;
+import com.ltj.security.module.User.po.UserCustom;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface UserMapper extends MyMapper<User> {
     List<Role> getUserRolesByUid(Integer id);
 
     //查询所有用户
-    List<User> selectAllUser();
+    List<UserCustom> selectAllUser();
 
     //修改用户
     int updateUserSelective(User user);
