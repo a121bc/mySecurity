@@ -8,7 +8,7 @@
         <div class="wrapper-md">
             <div class="b-a bg-light dk r r-2x">
                 <span ng-if="doing_async">...载入中...</span>
-                <abn-tree
+                <abn-tree-checkbox
                         tree-data         = "my_data"
                         tree-control      = "my_tree"
                         on-select         = "my_tree_handler(branch)"
@@ -20,7 +20,7 @@
                         tree-label        = "name"
                         tree-children     = "children"
                 >
-                </abn-tree>
+                </abn-tree-checkbox>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
 <div class="col-sm-1"></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" ng-click="cons()">show</button>
+    <!--<button class="btn btn-default" ng-click="cons()">show</button>-->
     <button class="btn btn-default" ng-click="cancel()">取消</button>
     <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()">确认</button>
 </div>

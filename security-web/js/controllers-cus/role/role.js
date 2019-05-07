@@ -43,6 +43,20 @@ app.controller('RoleController',
                 return deferred.promise;
             }
 
+            //修改角色菜单权限
+            function insertMenuRoles(roleCustom) {
+                let deferred = $q.defer();
+                $http({
+                    method: 'POST',
+                    url:appurl+'/MenuRole/insertMenuRoles',
+                    data:roleCustom
+                }).then(function successCallback(response) {
+                    let data = response.data;
+                    deferred.resolve(data);
+                });
+                return deferred.promise;
+            }
+
             //删除角色
             function deleteRoleById(id) {
                 let deferred = $q.defer();
@@ -197,9 +211,21 @@ app.controller('RoleController',
                     }
                 });
 
-                modalInstance.result.then(function (rids) {
-
-
+                modalInstance.result.then(function (mids) {
+                    //修改角色菜单权限
+                    // console.log(role.id);
+                    // console.log(mids);
+                    let roleCustom ={
+                        id:role.id,
+                        mids:mids
+                    };
+                    $q.when(insertMenuRoles(roleCustom)).then(function (data) {
+                        let deferred = $q.defer();
+                        if(data && data.flag) {
+                            role.mids = mids;
+                        }
+                        deferred.resolve(data);
+                    });
 
                 });
 
@@ -265,20 +291,10 @@ app.controller('roleMenuCtrl', function($scope, $modalInstance,mids,menuList) {
     $scope.my_data = menuList;
     $scope.doing_async = false;
 
-
-
-    $scope.cons = function() {
-        /*let menuArr = tree.get_tree_rows();
-        angular.forEach(menuArr,function (e,i,arr) {
-            e.choose = menu_ids.includes(e.branch.id);
-            console.log(e.choose);
-        });*/
-        console.log(menuArr);
-    };
-
-
+    //确认
     $scope.ok = function () {
-        let mids = $scope.menuList.filter(e => e.choose===true).map(e => e.id);
+        let menuArr = tree.get_tree_rows();
+        let mids = menuArr.filter(e => e.branch.choose == true).map(e => e.branch.id);
         $modalInstance.close(mids);
     };
 

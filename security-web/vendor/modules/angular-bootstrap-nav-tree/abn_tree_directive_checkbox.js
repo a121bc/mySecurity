@@ -3,7 +3,7 @@
 
   module = angular.module('angularBootstrapNavTree', []);
 
-  module.directive('abnTree', [
+  module.directive('abnTreeCheckbox', [
     '$timeout', function($timeout) {
       return {
         restrict: 'E',

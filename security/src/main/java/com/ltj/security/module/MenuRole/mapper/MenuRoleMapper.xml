@@ -8,4 +8,15 @@
         <result column="modify_userid" property="modify_userid" jdbcType="INTEGER" />
         <result column="modifydate" property="modifydate" jdbcType="TIMESTAMP" />
     </resultMap>
+
+    <insert id="insertMenuRoles">
+        INSERT INTO menu_role (mid,rid,modify_userid) VALUES
+        <foreach collection="mids" separator="," item="mid">
+            (#{mid},#{id},#{modify_userid})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByRid">
+        DELETE FROM menu_role WHERE rid=#{rid}
+    </delete>
 </mapper>
