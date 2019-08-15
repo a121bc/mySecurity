@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -32,6 +33,9 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
             }
             //当前用户所具有的权限
             Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+            if(authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                return;
+            }
             for (GrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(needRole)) {
                     return;
